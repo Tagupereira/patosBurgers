@@ -1,21 +1,21 @@
 <ion-header>
   <ion-toolbar color="dark">
-    <ion-title> Balcão </ion-title>
+    <ion-title> {{titulo}} </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" color="light">
   <ion-list>
 
-    <ion-item>
+    <ion-item lines="full" (click)="adicionadoToast()" *ngFor="let Produtos of listaProduto">
       <ion-thumbnail slot="start">
-        <img src="https://i.pinimg.com/originals/81/51/95/81519508737090bc009136c3dce58a6f.jpg"/>
+        <img [src]="Produtos.imagem"/>
       </ion-thumbnail>
 
       <ion-label>
         <div>
-          <h1>COMBO 1</h1>
-          <p>R$ 19,90</p>
+          <h1>{{Produtos.nome}}</h1>
+          <p>R$ {{Produtos.valor}}</p>
         </div>
       </ion-label>
     </ion-item>
