@@ -1,17 +1,24 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Tab 1
-    </ion-title>
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title> Balcão </ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content [fullscreen]="true" color="light">
+  <ion-list>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+    <ion-item>
+      <ion-thumbnail slot="start">
+        <img src="https://i.pinimg.com/originals/81/51/95/81519508737090bc009136c3dce58a6f.jpg"/>
+      </ion-thumbnail>
+
+      <ion-label>
+        <div>
+          <h1>COMBO 1</h1>
+          <p>R$ 19,90</p>
+        </div>
+      </ion-label>
+    </ion-item>
+
+  </ion-list>
 </ion-content>

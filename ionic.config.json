@@ -1,5 +1,7 @@
 {
   "name": "patosBurgers",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
