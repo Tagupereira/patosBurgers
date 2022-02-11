@@ -3,10 +3,58 @@
     <ion-title>
       Carrinho
     </ion-title>
+    <ion-chip slot="end" color="primary">
+      <h3>$ 180,00</h3>
+    </ion-chip>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true" >
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" >
+    <ion-refresher-content></ion-refresher-content>
+
+  </ion-refresher>
+
+  <ion-item  >
+
+    <ion-chip>
+      <ion-title>Pedido nº </ion-title>
+    </ion-chip>
+
+  </ion-item>
+
+  <ion-list *ngFor="let p of pedidos">
+
+    <ion-item >
+      <ion-avatar>
+        <img [src]='p.imagem'>
+      </ion-avatar>
+      <ion-grid>
+        <ion-row >
+          <ion-col size="5">
+           {{p.produto}}
+
+          </ion-col>
+          <ion-col size="2">
+           {{p.quantidade}}
+          </ion-col>
+          <ion-col size="4">
+            {{p.valor}}
+          </ion-col>
+          <ion-col size="1">
+            <ion-icon name="trash" (click)="excluir(p.idCarrinho)"></ion-icon>
+          </ion-col>
+
+
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+
+
+  </ion-list >
+
+  <ion-button color="success" expand="full" size="large">FINALIZAR</ion-button>
+  <ion-button color="danger" expand="full" tab="tab1" (click)="cancelar()">CANCELAR</ion-button>
 
 
 </ion-content>

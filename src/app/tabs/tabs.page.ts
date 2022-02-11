@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-tabs',
@@ -7,6 +8,10 @@ import { Component } from '@angular/core';
 })
 export class TabsPage {
 
-  constructor() {}
+  burger='./assets/icon_tabs/fast-food.svg';
+  pedidos='./assets/icon_tabs/list.svg';
+  carrinho='./assets/icon_tabs/cart.svg';
 
+  constructor() {}
 }
+

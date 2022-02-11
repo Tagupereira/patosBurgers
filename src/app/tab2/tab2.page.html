@@ -7,5 +7,16 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-list>
 
+    <ion-item *ngFor="let Clientes of listaClientes">
+      <ion-thumbnail>
+        <img [src]="Clientes.imagem">
+      </ion-thumbnail>
+         <ion-label>{{Clientes.nome}}</ion-label>
+         <ion-button>
+           Ver Pedido
+         </ion-button>
+    </ion-item>
+  </ion-list>
 </ion-content>
