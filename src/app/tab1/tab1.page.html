@@ -14,7 +14,7 @@
   <ion-list>
 
       <ion-item lines="full"  *ngFor="let p of produtos">
-        <ion-item (click)="adicionaItem(p.idProduto)">
+        <ion-item (click)="adicionaItem(p.idProduto, p.nome)">
 
           <ion-thumbnail slot="start">
             <img class="imagemProduto" [src]="p.imagem"/>

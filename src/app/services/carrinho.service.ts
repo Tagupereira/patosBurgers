@@ -21,6 +21,7 @@ export interface Pedido{
 export class PedidosService {
 
   private url = 'http://192.168.0.106/PROJETOS/API/carrinho';
+  private url1 = 'http://192.168.0.106/PROJETOS/API/carrinhoD';
 
   constructor( private http: HttpClient) {}
 
@@ -29,17 +30,17 @@ export class PedidosService {
     return this.http.get<[Pedido]>(this.url);
 
   }
+//remove 1 item do carrinho
 
   remove(idCarrinho: any){
     return this.http.delete(this.url + '/' + idCarrinho);
   }
 
-  cancelar(codPedido){
+  excluirCarrinho(delPedido){
+    console.log(delPedido);
+    return this.http.delete(this.url1 + '/' + delPedido);
 
-    return this.http.delete(this.url + '/' + codPedido);
 
   }
-
-
 
 }

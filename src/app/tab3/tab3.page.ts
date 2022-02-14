@@ -3,10 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import { Pedido, PedidosService } from '../services/pedidos.service';
-
-
-
+import { Pedido, PedidosService } from '../services/carrinho.service';
 
 @Component({
   selector: 'app-tab3',
@@ -15,9 +12,9 @@ import { Pedido, PedidosService } from '../services/pedidos.service';
 })
 export class Tab3Page implements OnInit{
   msg: string;
-
   pedidos: Pedido[];
-
+  codPedido=0;
+  soma=0.00;
 
   constructor(public alertController: AlertController,
     public toastController: ToastController,
@@ -25,73 +22,114 @@ export class Tab3Page implements OnInit{
     private service: PedidosService
     ) {
 
+      this.service.getAll().subscribe(response =>{
+        this.pedidos = response;
+        this.soma = this.soma;
 
+
+
+        if(response.length <= 0){
+          this.codPedido = 0;
+          this.soma = 0.00;
+        }else{
+          this.codPedido = response[0].codPedido;
+          this.soma = response[0][0].valorTotal;
+        }
+      });
     }
 
-  ngOnInit(){
-
-    this.service.getAll().subscribe(response =>{
-      this.pedidos = response;
-    });
-
- }
-
- delete(idCarrinho: any){
-
+// função para excluir 1 item do carrinho
+ delete(idCarrinho){
   this.service.remove(idCarrinho).subscribe(() =>{
-
     this.service.getAll().subscribe(response =>{
       this.pedidos = response;
+      this.soma = this.soma;
+      if(response.length <= 0){
+        this.codPedido = 0;
+        this.soma = 0.00;
+      }else{
+        this.codPedido = response[0].codPedido;
+        this.soma = response[0][0].valorTotal;
+      }
     });
   });
-
  }
+// exclui todos os itens do carrinho
+ excluirCarrinho(codPedido){
 
+  this.service.excluirCarrinho(codPedido).subscribe(() =>{
+     this.service.getAll().subscribe(response =>{
+       this.pedidos = response;
+       this.soma = this.soma;
+       if(response.length <= 0){
+         this.codPedido = 0;
+         this.soma = 0.00;
+       }else{
+         this.codPedido = response[0].codPedido;
+         this.soma = response[0][0].valorTotal;
+       }
+    });
+  });
+}
 
 // codigo do refresh --------------------------------
- doRefresh(event) {
+doRefresh(event) {
 
   setTimeout(() => {
     this.service.getAll().subscribe(response =>{
       this.pedidos = response;
+      this.soma = this.soma;
+      if(response.length <= 0){
+        this.codPedido = 0;
+        this.soma = 0.00;
+      }else{
+        this.codPedido = response[0].codPedido;
+        this.soma = response[0][0].valorTotal;
+      }
     });
 
     event.target.complete();
   }, 800);
 }
 
-
-
 // codigos toast alert --------------------------------------------------
-  async excluir(idPedido) {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Excluir Item',
-      message: 'Deseja cancelar esse item?',
-      buttons: [
-        {
-          text: 'Não',
-          role: 'cancel',
-          cssClass: 'secondary',
-          id: 'cancel-button'
-        }, {
-          text: 'Sim',
-          id: 'confirm-button',
-          handler: () => {
-            this.msg='Item Excluido';
-            this.delete(idPedido);
-
-            this.canceladoToast();
+  async excluir(idCarrinho, produto) {
+      const alert = await this.alertController.create({
+        header: 'Excluir Item',
+        message: 'Deseja excluir '+ produto + '?',
+        buttons: [
+          {
+            text: 'Não',
+            role: 'cancel',
+            cssClass: 'secondary',
+            id: 'cancel-button'
+          }, {
+            text: 'Sim',
+            id: 'confirm-button',
+            handler: () => {
+              this.msg='Item Excluido';
+              this.delete(idCarrinho);
+              this.canceladoToast();
+            }
           }
-        }
-      ]
-    });
-    await alert.present();
+        ]
+      });
+      await alert.present();
   }
 
-  async cancelar() {
+verifica(){
+  this.service.getAll().subscribe(response =>{
+    if(response.length <= 0){
+      this.msg='Carrinho não Possui itens';
+      this.canceladoToast();
+    }else{
+      this.cancelar();
+    }
+  });
+}
 
-      const alert = await this.alertController.create({
+  async cancelar() {
+        const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
         header: 'Cancelar Pedido',
         message: 'Deseja cancelar esse Pedido?',
@@ -101,25 +139,22 @@ export class Tab3Page implements OnInit{
             role: 'cancel',
             cssClass: 'secondary',
             id: 'cancel-button',
-            handler: (blah) => {
-              console.log('Confirm Cancel: blah');
-            }
           }, {
             text: 'Sim',
             id: 'confirm-button',
             handler: () => {
+
               this.msg='Pedido excluido';
               this.canceladoToast();
-
+              this.excluirCarrinho(this.codPedido);
               this.route.navigateByUrl('/tabs/tab1');
-
-
             }
           }
         ]
       });
-      await alert.present();
-    }
+    await alert.present();
+  }
+
 
     async canceladoToast() {
       const toast = await this.toastController.create({
@@ -130,5 +165,14 @@ export class Tab3Page implements OnInit{
       });
       toast.present();
     }
+
+    ngOnInit(){
+      this.service.getAll().subscribe(response =>{
+        this.pedidos = response;
+        //this.soma = response[0][0].valorTotal;
+        console.log(response);
+
+      });
+   }
 
 }

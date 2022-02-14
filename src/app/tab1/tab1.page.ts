@@ -2,6 +2,7 @@ import { Produto, ProdutosService } from './../services/produtos.service';
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 
+
 @Component({
   selector: 'app-tab1',
   templateUrl: 'tab1.page.html',
@@ -11,7 +12,6 @@ export class Tab1Page implements OnInit{
 
   titulo = 'Balcão';
   produtos: Produto[];
-
   constructor(public toastController: ToastController, private service:  ProdutosService) {}
 
   ngOnInit() {
@@ -20,19 +20,19 @@ export class Tab1Page implements OnInit{
     });
   }
 
-  adicionaItem(id){
+  adicionaItem(idProduto, nome){
 
-    console.log(id);
-    //this.service.adicionar(id);
-      //this.adicionadoToast();
+    this.service.adicionar(idProduto);
+
+    this.adicionadoToast(nome);
 
   }
 
 
 // codigo toast alert
-  async adicionadoToast() {
+  async adicionadoToast(nome) {
     const toast = await this.toastController.create({
-      message: 'Item Adicionado.',
+      message: nome + ' Adicionado ao Pedido.',
       duration: 2000,
       color: 'success',
       position: 'top'
