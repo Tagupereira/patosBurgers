@@ -1,6 +1,7 @@
 import { Produto, ProdutosService } from './../services/produtos.service';
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
+import { NgForm } from '@angular/forms';
 
 
 @Component({
@@ -12,6 +13,8 @@ export class Tab1Page implements OnInit{
 
   titulo = 'Balcão';
   produtos: Produto[];
+
+
   constructor(public toastController: ToastController, private service:  ProdutosService) {}
 
   ngOnInit() {
@@ -22,7 +25,9 @@ export class Tab1Page implements OnInit{
 
   adicionaItem(idProduto, nome){
 
-    this.service.adicionar(idProduto);
+    this.service.adicionar(idProduto).subscribe(response =>{
+
+    });
 
     this.adicionadoToast(nome);
 

@@ -17,7 +17,7 @@ export interface Produto{
 export class ProdutosService {
   private url = 'http://192.168.0.106/PROJETOS/API/produtos';
 
-  private url1 = 'http://192.168.0.106/PROJETOS/API/carrinhoP';
+  private url1 = 'http://192.168.0.106/PROJETOS/API/carrinhoA';
 
   constructor(private http: HttpClient) {}
 
@@ -25,8 +25,7 @@ export class ProdutosService {
     return this.http.get<[Produto]>(this.url);
   }
 
-  adicionar(add){
-    console.log(add);
-    return this.http.post(this.url1, add);
+  adicionar(addProduto: any){
+  return this.http.post(this.url1, addProduto);
   }
 }

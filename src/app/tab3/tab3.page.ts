@@ -16,6 +16,7 @@ export class Tab3Page implements OnInit{
   codPedido=0;
   soma=0.00;
 
+
   constructor(public alertController: AlertController,
     public toastController: ToastController,
     private route: Router,
@@ -25,8 +26,6 @@ export class Tab3Page implements OnInit{
       this.service.getAll().subscribe(response =>{
         this.pedidos = response;
         this.soma = this.soma;
-
-
 
         if(response.length <= 0){
           this.codPedido = 0;
@@ -38,62 +37,64 @@ export class Tab3Page implements OnInit{
       });
     }
 
-// função para excluir 1 item do carrinho
- delete(idCarrinho){
-  this.service.remove(idCarrinho).subscribe(() =>{
-    this.service.getAll().subscribe(response =>{
-      this.pedidos = response;
-      this.soma = this.soma;
-      if(response.length <= 0){
-        this.codPedido = 0;
-        this.soma = 0.00;
-      }else{
-        this.codPedido = response[0].codPedido;
-        this.soma = response[0][0].valorTotal;
-      }
-    });
-  });
- }
-// exclui todos os itens do carrinho
- excluirCarrinho(codPedido){
+  // função para excluir 1 item do carrinho
+  delete(idCarrinho){
 
-  this.service.excluirCarrinho(codPedido).subscribe(() =>{
-     this.service.getAll().subscribe(response =>{
-       this.pedidos = response;
-       this.soma = this.soma;
-       if(response.length <= 0){
-         this.codPedido = 0;
-         this.soma = 0.00;
-       }else{
-         this.codPedido = response[0].codPedido;
-         this.soma = response[0][0].valorTotal;
-       }
+    this.service.remove(idCarrinho).subscribe(() =>{
+      this.service.getAll().subscribe(response =>{
+        this.pedidos = response;
+        this.soma = this.soma;
+        if(response.length <= 0){
+          this.codPedido = 0;
+          this.soma = 0.00;
+        }else{
+          this.codPedido = response[0].codPedido;
+          this.soma = response[0][0].valorTotal;
+        }
+      });
     });
-  });
-}
+  }
+
+// exclui todos os itens do carrinho
+  excluirCarrinho(codPedido){
+
+    this.service.excluirCarrinho(codPedido).subscribe(() =>{
+      this.service.getAll().subscribe(response =>{
+        this.pedidos = response;
+        this.soma = this.soma;
+        if(response.length <= 0){
+          this.codPedido = 0;
+          this.soma = 0.00;
+        }else{
+          this.codPedido = response[0].codPedido;
+          this.soma = response[0][0].valorTotal;
+        }
+      });
+    });
+  }
 
 // codigo do refresh --------------------------------
-doRefresh(event) {
+  doRefresh(event) {
 
-  setTimeout(() => {
-    this.service.getAll().subscribe(response =>{
-      this.pedidos = response;
-      this.soma = this.soma;
-      if(response.length <= 0){
-        this.codPedido = 0;
-        this.soma = 0.00;
-      }else{
-        this.codPedido = response[0].codPedido;
-        this.soma = response[0][0].valorTotal;
-      }
-    });
+    setTimeout(() => {
+      this.service.getAll().subscribe(response =>{
+        this.pedidos = response;
+        this.soma = this.soma;
+        if(response.length <= 0){
+          this.codPedido = 0;
+          this.soma = 0.00;
+        }else{
+          this.codPedido = response[0].codPedido;
+          this.soma = response[0][0].valorTotal;
+        }
+      });
+      event.target.complete();
+    }, 800);
+  }
 
-    event.target.complete();
-  }, 800);
-}
-
-// codigos toast alert --------------------------------------------------
+  // codigos toast alert --------------------------------------------------
   async excluir(idCarrinho, produto) {
+
       const alert = await this.alertController.create({
         header: 'Excluir Item',
         message: 'Deseja excluir '+ produto + '?',
@@ -117,18 +118,20 @@ doRefresh(event) {
       await alert.present();
   }
 
-verifica(){
-  this.service.getAll().subscribe(response =>{
-    if(response.length <= 0){
-      this.msg='Carrinho não Possui itens';
-      this.canceladoToast();
-    }else{
-      this.cancelar();
-    }
-  });
-}
+  verifica(){
+
+    this.service.getAll().subscribe(response =>{
+      if(response.length <= 0){
+        this.msg='Carrinho não Possui itens';
+        this.canceladoToast();
+      }else{
+        this.cancelar();
+      }
+    });
+  }
 
   async cancelar() {
+
         const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
         header: 'Cancelar Pedido',
@@ -143,7 +146,6 @@ verifica(){
             text: 'Sim',
             id: 'confirm-button',
             handler: () => {
-
               this.msg='Pedido excluido';
               this.canceladoToast();
               this.excluirCarrinho(this.codPedido);
@@ -155,24 +157,23 @@ verifica(){
     await alert.present();
   }
 
+  async canceladoToast() {
 
-    async canceladoToast() {
-      const toast = await this.toastController.create({
-        message: this.msg,
-        duration: 2000,
-        color: 'danger',
-        position: 'top'
-      });
-      toast.present();
-    }
+    const toast = await this.toastController.create({
+      message: this.msg,
+      duration: 1000,
+      color: 'danger',
+      position: 'top'
+    });
+    toast.present();
+  }
 
-    ngOnInit(){
-      this.service.getAll().subscribe(response =>{
-        this.pedidos = response;
-        //this.soma = response[0][0].valorTotal;
-        console.log(response);
+  ngOnInit(){
 
-      });
-   }
+    this.service.getAll().subscribe(response =>{
+      this.pedidos = response;
+      this.soma = this.soma;
+    });
+  }
 
 }

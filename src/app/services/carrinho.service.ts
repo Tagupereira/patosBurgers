@@ -28,7 +28,6 @@ export class PedidosService {
 
   getAll(){
     return this.http.get<[Pedido]>(this.url);
-
   }
 //remove 1 item do carrinho
 
@@ -37,10 +36,7 @@ export class PedidosService {
   }
 
   excluirCarrinho(delPedido){
-    console.log(delPedido);
     return this.http.delete(this.url1 + '/' + delPedido);
-
-
   }
 
 }
