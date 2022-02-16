@@ -7,11 +7,11 @@
     </ion-tab-button>
 
     <ion-tab-button tab="tab2">
-      <ion-icon [src]="pedidos"></ion-icon>
+      <ion-icon [src]="pedido"></ion-icon>
       <ion-label>Pedidos</ion-label>
     </ion-tab-button>
 
-    <ion-tab-button tab="tab3">
+    <ion-tab-button tab="tab3" (click)="atualizaPedido()">
       <ion-icon [src]="carrinho"></ion-icon>
       <ion-label>Carrinho</ion-label>
     </ion-tab-button>

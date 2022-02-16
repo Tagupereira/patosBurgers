@@ -16,7 +16,6 @@ export class Tab3Page implements OnInit{
   codPedido=0;
   soma=0.00;
 
-
   constructor(public alertController: AlertController,
     public toastController: ToastController,
     private route: Router,

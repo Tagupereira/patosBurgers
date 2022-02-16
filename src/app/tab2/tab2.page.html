@@ -7,16 +7,24 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" >
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
   <ion-list>
 
-    <ion-item *ngFor="let Clientes of listaClientes">
-      <ion-thumbnail>
-        <img [src]="Clientes.imagem">
-      </ion-thumbnail>
-         <ion-label>{{Clientes.nome}}</ion-label>
-         <ion-button>
-           Ver Pedido
-         </ion-button>
+    <ion-item lines="full" *ngFor="let pe of pedido">
+      <ion-label>
+        <div>
+          <h1># {{pe.codPedido}}</h1>
+          <h1>{{pe.cliente}}</h1>
+        </div>
+
+      </ion-label>
+      <ion-button slot="end" size="large"><ion-icon name="eye"></ion-icon></ion-button>
+
+
+
     </ion-item>
   </ion-list>
 </ion-content>

@@ -26,33 +26,36 @@
 
   <ion-list *ngFor="let p of pedidos">
 
+    <ion-item >
+      <ion-avatar>
+        <img [src]='p.imagem'>
+      </ion-avatar>
+      <ion-grid>
+        <ion-row >
+          <ion-col size="5">
+            {{p.produto}}
+          </ion-col>
+          <ion-col size="2">
+            {{p.quantidade}}
+          </ion-col>
+          <ion-col size="4">
+            {{p.valor}}
+          </ion-col>
+          <ion-col size="1">
+            <ion-icon name="trash" (click)="excluir(p.idCarrinho, p.produto)"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
 
-      <ion-item >
-        <ion-avatar>
-          <img [src]='p.imagem'>
-        </ion-avatar>
-        <ion-grid>
-          <ion-row >
-            <ion-col size="5">
-              {{p.produto}}
-            </ion-col>
-            <ion-col size="2">
-              {{p.quantidade}}
-            </ion-col>
-            <ion-col size="4">
-              {{p.valor}}
-            </ion-col>
-            <ion-col size="1">
-              <ion-icon name="trash" (click)="excluir(p.idCarrinho, p.produto)"></ion-icon>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-item>
+
 
   </ion-list >
-
-  <ion-button color="success" expand="full" size="large">FINALIZAR</ion-button>
-  <ion-button color="danger" expand="full" tab="tab1" (click)="verifica()">CANCELAR PEDIDO</ion-button>
+    <ion-button color="success" expand="full" size="large">FINALIZAR</ion-button>
+    <ion-button color="danger" expand="full" tab="tab1" (click)="verifica()">CANCELAR PEDIDO</ion-button>
 
 
 </ion-content>
+<ion-footer>
+
+</ion-footer>
