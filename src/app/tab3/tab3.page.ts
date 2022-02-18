@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Pedido, PedidosService } from '../services/carrinho.service';
 
 @Component({
@@ -15,11 +15,13 @@ export class Tab3Page implements OnInit{
   pedidos: Pedido[];
   codPedido=0;
   soma=0.00;
+  colorToast: string;
 
   constructor(public alertController: AlertController,
     public toastController: ToastController,
     private route: Router,
-    private service: PedidosService
+    private service: PedidosService,
+    private rotaParams: ActivatedRoute
     ) {
 
       this.service.getAll().subscribe(response =>{
@@ -108,6 +110,7 @@ export class Tab3Page implements OnInit{
             id: 'confirm-button',
             handler: () => {
               this.msg='Item Excluido';
+              this.colorToast = 'danger';
               this.delete(idCarrinho);
               this.canceladoToast();
             }
@@ -122,6 +125,7 @@ export class Tab3Page implements OnInit{
     this.service.getAll().subscribe(response =>{
       if(response.length <= 0){
         this.msg='Carrinho não Possui itens';
+        this.colorToast = 'warning';
         this.canceladoToast();
       }else{
         this.cancelar();
@@ -146,6 +150,7 @@ export class Tab3Page implements OnInit{
             id: 'confirm-button',
             handler: () => {
               this.msg='Pedido excluido';
+              this.colorToast = 'danger';
               this.canceladoToast();
               this.excluirCarrinho(this.codPedido);
               this.route.navigateByUrl('/tabs/tab1');
@@ -161,10 +166,21 @@ export class Tab3Page implements OnInit{
     const toast = await this.toastController.create({
       message: this.msg,
       duration: 1000,
-      color: 'danger',
+      color: this.colorToast,
       position: 'top'
     });
     toast.present();
+  }
+
+  pagamento(){
+    if(this.codPedido > 0){
+      this.route.navigateByUrl('/pagamento/'+ this.codPedido+'/'+this.soma);
+    }
+    else{
+      this.msg = 'Carrinho vazio!';
+      this.colorToast = 'warning';
+      this.canceladoToast();
+    }
   }
 
   ngOnInit(){

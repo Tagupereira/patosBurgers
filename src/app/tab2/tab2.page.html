@@ -13,18 +13,16 @@
 
   <ion-list>
 
-    <ion-item lines="full" *ngFor="let pe of pedido">
-      <ion-label>
-        <div>
-          <h1># {{pe.codPedido}}</h1>
-          <h1>{{pe.cliente}}</h1>
-        </div>
 
-      </ion-label>
-      <ion-button slot="end" size="large"><ion-icon name="eye"></ion-icon></ion-button>
+    <ion-item lines="full" *ngFor="let pe of pedido" (click)="pedidoCliente(pe.codPedido, pe.valor, pe.cliente)">
+      <ion-item lines="none">
+        {{pe.cliente}}
+      </ion-item>
 
-
-
+      <ion-item lines="none" slot="end">
+        # {{pe.codPedido}}
+      </ion-item>
     </ion-item>
   </ion-list>
+
 </ion-content>

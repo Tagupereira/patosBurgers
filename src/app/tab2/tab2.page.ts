@@ -1,5 +1,7 @@
+import { AlertController } from '@ionic/angular';
 import {  Pedido,PedidoService } from './../services/pedido.service';
 import { Component, OnInit } from '@angular/core';
+import { disableDebugTools } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-tab2',
@@ -10,7 +12,7 @@ export class Tab2Page implements OnInit{
 
   pedido: Pedido[];
 
-  constructor(private service: PedidoService) {}
+  constructor(private service: PedidoService, public alert: AlertController) {}
 
 
   ngOnInit() {
@@ -33,4 +35,15 @@ export class Tab2Page implements OnInit{
   }
 
   ////////////////////////////
+   async pedidoCliente(codPedido, valor, cliente) {
+
+    const alert = await this.alert.create({
+
+    header: 'cod: '+codPedido,
+    subHeader:'Cliente: '+cliente,
+    message:'<h1>R$ '+valor+'</h1>',
+
+  });
+await alert.present();
+}
 }

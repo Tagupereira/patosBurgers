@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Formas de Pagamento</ion-title>
+    <ion-item slot="end" lines="none" (click)="fecharPagamento()">
+      <ion-icon name="close" ></ion-icon>
+    </ion-item>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-grid class="payment">
+    <ion-row>
+      <ion-col>
+        <ion-button class="btnPay" shape="round" size="default" (click)="recebePagamento('Dinheiro', '1')">Dinheiro</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button class="btnPay" shape="round" size="default" (click)="recebePagamento('Pix', '2')">Pix</ion-button>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-button class="btnPay" shape="round" size="default" (click)="recebePagamento('Débito', '3')">Débito</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button class="btnPay" shape="round" size="default" (click)="recebePagamento('Crédito', '4')">Crédito</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+
+
+  <ion-item class="input">
+    <ion-label color="none"><ion-icon name="add" ></ion-icon> Adicionar cliente : </ion-label>
+    <ion-input (ionChange)="nome($event)" type="text" name="cliente" 	maxlength="19" clearInput></ion-input>
+  </ion-item>
+
+  <ion-item lines="full" class="entrega">
+    <h4>Pedido: </h4>
+    <h5 slot="end"># {{codPedido}}</h5>
+  </ion-item>
+
+  <ion-item lines="full" class="entrega">
+    <h4>Entrega: </h4>
+    <h5 slot="end">R$ 0,00</h5>
+  </ion-item>
+
+  <ion-item lines="full">
+    <h1>Total: </h1>
+    <h2 slot="end">R$ {{soma}}</h2>
+  </ion-item>
+
+  <ion-button class="btnPagamento"color="medium" expand="full" fill="none" size="large" ><h2>{{codPagamento}} - {{pagamento}}</h2></ion-button>
+
+</ion-content>
+
+<ion-footer color="none">
+
+    <ion-button color="success" size="large" expand="full" (click)="finaliza()">Finalizar Pedido</ion-button>
+
+</ion-footer>
