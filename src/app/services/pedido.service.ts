@@ -15,7 +15,7 @@ export interface Pedido{
   imagem: string;
   produto: string;
   idCategoria: number;
-  nomePagamento: string;
+  tipo: string;
 }
 
 @Injectable({
@@ -24,10 +24,21 @@ export interface Pedido{
 export class PedidoService {
 
   private url = 'http://192.168.0.106/PROJETOS/API/pedidos';
+  private url1 = 'http://192.168.0.106/PROJETOS/API/carrinhoD';
+
 
   constructor(private http: HttpClient) { }
 
   getAll(){
     return this.http.get<[Pedido]>(this.url);
   }
+
+  getPedido(idPedido){
+    return this.http.get<[Pedido]>(this.url+'/'+idPedido);
+  }
+
+  excluirCarrinho(delPedido){
+    return this.http.delete(this.url1 + '/' + delPedido);
+  }
+
 }

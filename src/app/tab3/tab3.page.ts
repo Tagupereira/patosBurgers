@@ -74,26 +74,7 @@ export class Tab3Page implements OnInit{
     });
   }
 
-// codigo do refresh --------------------------------
-  doRefresh(event) {
-
-    setTimeout(() => {
-      this.service.getAll().subscribe(response =>{
-        this.pedidos = response;
-        this.soma = this.soma;
-        if(response.length <= 0){
-          this.codPedido = 0;
-          this.soma = 0.00;
-        }else{
-          this.codPedido = response[0].codPedido;
-          this.soma = response[0][0].valorTotal;
-        }
-      });
-      event.target.complete();
-    }, 800);
-  }
-
-  // codigos toast alert --------------------------------------------------
+// codigos toast alert --------------------------------------------------
   async excluir(idCarrinho, produto) {
 
       const alert = await this.alertController.create({
@@ -189,6 +170,26 @@ export class Tab3Page implements OnInit{
       this.pedidos = response;
       this.soma = this.soma;
     });
+
+  setInterval(()=> {
+      this.service.getAll().subscribe(response =>{
+        this.pedidos = response;
+        this.soma = this.soma;
+        //console.log('atualizou');
+        if(response.length <= 0){
+          this.codPedido = 0;
+          this.soma = 0.00;
+        }else{
+          this.codPedido = response[0].codPedido;
+          this.soma = response[0][0].valorTotal;
+        }
+      });
+    },1000);
+
   }
+
+
+
+
 
 }

@@ -25,7 +25,8 @@ export class ProdutosService {
     return this.http.get<[Produto]>(this.url);
   }
 
-  adicionar(addProduto: any){
-  return this.http.post(this.url1, addProduto);
+  adicionar(addProduto: number){
+    //console.log(addProduto);
+    return this.http.post(this.url1, addProduto);
   }
 }

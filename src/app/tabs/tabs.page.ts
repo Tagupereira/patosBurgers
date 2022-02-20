@@ -19,19 +19,14 @@ export class TabsPage implements OnInit{
 
   constructor(private service: PedidosService) {}
 
-  atualizaPedido(){
-    this.service.getAll().subscribe(response =>{
-      this.pedidos = response;
-      this.soma = this.soma;
-      if(response.length <= 0){
-        this.codPedido = 0;
-        this.soma = 0.00;
-      }else{
-        this.codPedido = response[0].codPedido;
-        this.soma = response[0][0].valorTotal;
-      }
-    });
-
+  doRefresh(event){
+    setInterval(()=> {
+      this.service.getAll().subscribe(response =>{
+        this.pedidos = response;
+        console.log('deu certo');
+      });
+      event.target.complete();
+    },1000);
   }
 
   ngOnInit(){}

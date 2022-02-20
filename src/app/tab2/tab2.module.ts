@@ -1,3 +1,5 @@
+import { ModalPageModule } from './../modal/modal.module';
+import { ModalPage } from './../modal/modal.page';
 import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -8,6 +10,7 @@ import { Tab2Page } from './tab2.page';
 
 import { Tab2PageRoutingModule } from './tab2-routing.module';
 
+
 @NgModule({
   imports: [
     IonicModule,
@@ -16,5 +19,6 @@ import { Tab2PageRoutingModule } from './tab2-routing.module';
     Tab2PageRoutingModule
   ],
   declarations: [Tab2Page]
+
 })
 export class Tab2PageModule {}

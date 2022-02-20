@@ -12,10 +12,11 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" >
+  <!--
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" >
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
-
+-->
   <ion-item  >
 
     <ion-chip>
@@ -48,14 +49,10 @@
       </ion-grid>
     </ion-item>
 
-
-
   </ion-list >
-    <ion-button color="success" expand="full" size="large" (click)="pagamento()">FINALIZAR</ion-button>
-    <ion-button color="danger" expand="full" tab="tab1" (click)="verifica()">CANCELAR PEDIDO</ion-button>
-
-
+  <ion-button color="success" expand="full" size="large" (click)="pagamento()">FINALIZAR</ion-button>
+  <ion-button color="danger" expand="full" tab="tab1" (click)="verifica()">CANCELAR PEDIDO</ion-button>
 </ion-content>
-<ion-footer>
 
-</ion-footer>
+
+

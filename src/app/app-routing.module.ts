@@ -9,6 +9,10 @@ const routes: Routes = [
   {
     path: 'pagamento/:codPedido/:soma',
     loadChildren: () => import('./pagamento/pagamento.module').then( m => m.PagamentoPageModule)
+  },
+  {
+    path: 'modal/:dados',
+    loadChildren: () => import('./modal/modal.module').then( m => m.ModalPageModule)
   }
 ];
 @NgModule({

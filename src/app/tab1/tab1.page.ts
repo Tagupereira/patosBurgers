@@ -1,9 +1,7 @@
 import { Produto, ProdutosService } from './../services/produtos.service';
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
-import { NgForm } from '@angular/forms';
 import { ActionSheetController } from '@ionic/angular';
-
 
 @Component({
   selector: 'app-tab1',
@@ -16,7 +14,6 @@ export class Tab1Page implements OnInit{
   produtos: Produto[];
   alertController: any;
 
-
   constructor(public toastController: ToastController,
     private service:  ProdutosService,
     public action: ActionSheetController
@@ -26,16 +23,17 @@ export class Tab1Page implements OnInit{
     this.service.getAll().subscribe(response =>{
       this.produtos = response;
     });
+    setInterval(()=> {
+      this.service.getAll().subscribe(response =>{
+        this.produtos = response;
+      });
+    },1000);
   }
 
   adicionaItem(idProduto, nome){
-
     this.service.adicionar(idProduto).subscribe(response =>{
-
     });
-
     this.adicionadoToast(nome);
-
   }
 
 // codigo toast alert
@@ -48,22 +46,7 @@ export class Tab1Page implements OnInit{
 
     });
     toast.present();
-
   }
-
-// codigo do refresh------------------------------------
-
-  doRefresh(event) {
-
-    setTimeout(() => {
-      this.service.getAll().subscribe(response =>{
-        this.produtos = response;
-      });
-
-      event.target.complete();
-    }, 800);
-  }
-
   ////////////////////////////
 
   async teste() {
