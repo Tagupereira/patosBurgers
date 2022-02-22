@@ -38,6 +38,30 @@ export class Tab3Page implements OnInit{
       });
     }
 
+    ionViewDidEnter() {
+      this.service.getAll().subscribe(response =>{
+        this.pedidos = response;
+        this.soma = this.soma;
+        //console.log('carrinho');
+        if(response.length <= 0){
+          this.codPedido = 0;
+          this.soma = 0.00;
+        }else{
+          this.codPedido = response[0].codPedido;
+          this.soma = response[0][0].valorTotal;
+        }
+      });
+    }
+    doRefresh(event){
+      setTimeout(() => {
+        this.service.getAll().subscribe(response =>{
+          this.pedidos = response;
+        });
+        //console.log('atualizei');
+        event.target.complete();
+      }, 800);
+    }
+
   // função para excluir 1 item do carrinho
   delete(idCarrinho){
 
@@ -164,18 +188,11 @@ export class Tab3Page implements OnInit{
     }
   }
 
-  ngOnInit(){
+    ngOnInit(){
 
-    this.service.getAll().subscribe(response =>{
-      this.pedidos = response;
-      this.soma = this.soma;
-    });
-
-  setInterval(()=> {
       this.service.getAll().subscribe(response =>{
         this.pedidos = response;
         this.soma = this.soma;
-        //console.log('atualizou');
         if(response.length <= 0){
           this.codPedido = 0;
           this.soma = 0.00;
@@ -184,12 +201,7 @@ export class Tab3Page implements OnInit{
           this.soma = response[0][0].valorTotal;
         }
       });
-    },1000);
+    }
 
   }
 
-
-
-
-
-}

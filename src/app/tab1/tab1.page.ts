@@ -14,24 +14,35 @@ export class Tab1Page implements OnInit{
   produtos: Produto[];
   alertController: any;
 
+
   constructor(public toastController: ToastController,
     private service:  ProdutosService,
     public action: ActionSheetController
-    ){}
-
-  ngOnInit() {
-    this.service.getAll().subscribe(response =>{
-      this.produtos = response;
-    });
-    setInterval(()=> {
+    ){
       this.service.getAll().subscribe(response =>{
         this.produtos = response;
       });
-    },1000);
-  }
+      setTimeout(()=> {
+        this.service.getAll().subscribe(response =>{
+          this.produtos = response;
+        });
+      });
+    }
+
+    doRefresh(event){
+      setTimeout(() => {
+        this.service.getAll().subscribe(response =>{
+          this.produtos = response;
+        });
+        //console.log('atualizei');
+        event.target.complete();
+      }, 800);
+    }
+  ngOnInit() {}
 
   adicionaItem(idProduto, nome){
     this.service.adicionar(idProduto).subscribe(response =>{
+
     });
     this.adicionadoToast(nome);
   }

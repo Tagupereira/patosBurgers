@@ -9,10 +9,17 @@
 
 <ion-content>
   <ion-item lines="full">
-    <ion-item lines="none"><h4>  <strong>Cliente: </strong> {{nomeCliente}}</h4></ion-item>
-    <ion-item lines="none"  slot="end" ><h4>{{tipoPag}}</h4></ion-item>
+    <ion-item lines="none">
+      Data: <ion-item lines="none">{{data}}</ion-item>
+    </ion-item>
   </ion-item>
+  <ion-item lines="full">
+    <ion-item lines="none"><h4>  <strong>Cliente: </strong> {{nomeCliente}}</h4></ion-item>
+    <ion-item lines="none"  slot="end" >{{tipoPag}}</ion-item>
+  </ion-item>
+
   <ion-list>
+
     <ion-item lines="full">
       <ion-item slot="start" lines="none"><h5><strong>Produto</strong></h5></ion-item>
       <ion-item lines="none"><h5><strong>Qtd</strong></h5></ion-item>
@@ -21,25 +28,23 @@
     <ion-item *ngFor="let li of lista" lines="full">
 
       <ion-item lines="none" slot="start" >
-        <h5 >{{li.nome}} </h5>
+        {{li.nome}}
       </ion-item>
       <ion-item lines="none">
-        <h5>{{li.quantidade}}</h5>
+        x {{li.quantidade}}
       </ion-item>
       <ion-item lines="none" slot="end">
-        <h4 >R$ {{li.valor}}</h4>
+         {{li.valor}}
       </ion-item>
+      {{li.dataPedido}}
 
     </ion-item>
   </ion-list>
 
-
-
-
 </ion-content>
-<ion-item><h2><strong>Total: </strong></h2><h2 slot="end"><strong>R$ {{total}}</strong></h2></ion-item>
+<ion-item><h2>Total: </h2><h3 slot="end">R$ {{total}}</h3></ion-item>
 <ion-footer>
 
-  <ion-button expand="full" size="large" (click)="fecharModal()">fechar</ion-button>
+  <ion-button expand="full" size="large" (click)="fecharModal()" color="danger">fechar</ion-button>
 
 </ion-footer>

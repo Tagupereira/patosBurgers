@@ -7,14 +7,14 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <!--
+
   <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" >
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
--->
+
 
   <ion-list>
-    <ion-item lines="full" *ngFor="let pe of pedido" (click)="abrirModal(pe.codPedido, pe.valor, pe.cliente, pe.tipo)">
+    <ion-item lines="full" *ngFor="let pe of pedido" (click)="abrirModal(pe.codPedido, pe.valor, pe.cliente, pe.tipo, pe.dataPedido)">
 
       <ion-item lines="none">
         {{pe.cliente}}
@@ -23,8 +23,10 @@
       <ion-item lines="none" slot="end">
         # {{pe.codPedido}}
       </ion-item>
+
     </ion-item>
   </ion-list>
+
 
 </ion-content>
 

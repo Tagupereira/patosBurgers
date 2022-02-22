@@ -19,6 +19,7 @@ export class ModalPage implements OnInit {
   tipoPag: string;
   msg: string;
   colorToast: string;
+  data: any;
 
   constructor(private modal: ModalController,
     private pedido: PedidoService,
@@ -32,8 +33,8 @@ export class ModalPage implements OnInit {
   ngOnInit() {
     this.pedido.getPedido(this.cod).subscribe(response =>{
       this.lista = response;
-      console.log(this.lista);
     });
+    this.data = this.data.split('-').reverse().join('-');
 
   }
 
