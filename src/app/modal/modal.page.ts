@@ -1,8 +1,6 @@
-import { Pedido } from './../services/carrinho.service';
 import { PedidoService } from './../services/pedido.service';
 import { ModalController, AlertController, ToastController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
-
 
 @Component({
   selector: 'app-modal',
@@ -24,10 +22,12 @@ export class ModalPage implements OnInit {
   constructor(private modal: ModalController,
     private pedido: PedidoService,
     private alert: AlertController,
-    private toast: ToastController) {}
+    private toast: ToastController
+    ) {}
 
   fecharModal(){
     this.modal.dismiss();
+
   }
 
   ngOnInit() {
@@ -64,7 +64,6 @@ export class ModalPage implements OnInit {
     await alert.present();
 }
   excluir(cod){
-
     this.pedido.excluirCarrinho(cod).subscribe(() =>{
       this.fecharModal();
     });

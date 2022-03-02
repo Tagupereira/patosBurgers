@@ -13,7 +13,13 @@
   </ion-refresher>
 
 
+
+
   <ion-list>
+    <ion-item color="success" >
+      {{dia}}
+    </ion-item>
+
     <ion-item lines="full" *ngFor="let pe of pedido" (click)="abrirModal(pe.codPedido, pe.valor, pe.cliente, pe.tipo, pe.dataPedido)">
 
       <ion-item lines="none">
@@ -26,7 +32,6 @@
 
     </ion-item>
   </ion-list>
-
 
 </ion-content>
 

@@ -30,8 +30,12 @@ export class PagamentoPage implements OnInit {
   }
 
   nome(evento: any){
-    const cliente = evento.target.value;
-    this.nomeCliente = cliente;
+
+    const cliente1 = evento.target.value.toLowerCase();
+    const cliente2 = cliente1[0].toUpperCase() + cliente1.substr(1);
+
+    this.nomeCliente = cliente2;
+
   }
 
   recebePagamento(tipo: string, cod: string){

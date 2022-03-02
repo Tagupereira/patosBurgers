@@ -6,11 +6,12 @@ export interface Produto{
   idProduto: any;
   nome: string;
   descricao: string;
-  valor: any;
+  valor: number;
   imagem: string;
-  idCategoria: any;
+  idCategoria: number;
 
 }
+
 @Injectable({
   providedIn: 'root'
 })
