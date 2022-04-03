@@ -23,6 +23,7 @@ export class Tab1Page implements OnInit{
   refrigerantes = [];
   adicionais = [];
   entregas = [];
+  descontos = [];
 
 
 
@@ -32,6 +33,7 @@ export class Tab1Page implements OnInit{
     ){
       this.service.getAll().subscribe(response =>{
         this.produtos = response;
+
 
 ////////////// array de combos //////////////////
         for(let i = 0; i < response.length; i++){
@@ -135,6 +137,22 @@ export class Tab1Page implements OnInit{
 
         }
 
+        for(let i = 0; i < response.length; i++){
+
+          if(response[i].idCategoria==7){
+
+            this.descontos.push({
+              idProduto: response[i].idProduto,
+              nome:response[i].nome,
+              descricao: response[i].descricao,
+              valor: response[i].valor,
+              imagem: response[i].imagem,
+              idCategoria: response[i].idCategoria
+            });
+
+          }
+
+        }
       });
 
       setTimeout(()=> {

@@ -23,6 +23,7 @@ export class ProdutosService {
   constructor(private http: HttpClient) {}
 
   getAll(){
+    //return this.http.get<[Produto]>(this.url);
     return this.http.get<[Produto]>(this.url);
   }
 

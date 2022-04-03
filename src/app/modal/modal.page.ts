@@ -2,6 +2,7 @@ import { PedidoService } from './../services/pedido.service';
 import { ModalController, AlertController, ToastController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 
+
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.page.html',

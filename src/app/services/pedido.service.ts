@@ -18,6 +18,7 @@ export interface Pedido{
   tipo: string;
 }
 
+
 @Injectable({
   providedIn: 'root'
 })

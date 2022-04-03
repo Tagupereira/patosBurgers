@@ -14,6 +14,7 @@
   <ion-accordion-group>
     <ion-accordion value="combos">
       <ion-item slot="header">
+        <ion-icon class="size" name="fast-food-outline"></ion-icon>
         <ion-label>Combos</ion-label>
       </ion-item>
 
@@ -39,6 +40,7 @@
 
     <ion-accordion value="Individuais">
       <ion-item slot="header">
+        <ion-icon class="size" name="information-outline"></ion-icon>
         <ion-label>Individuais</ion-label>
       </ion-item>
       <ion-list slot="content">
@@ -62,6 +64,7 @@
 
     <ion-accordion value="Batatas">
       <ion-item slot="header">
+        <ion-icon class="size" name="stats-chart-outline"></ion-icon>
         <ion-label>Batatas</ion-label>
       </ion-item>
       <ion-list slot="content">
@@ -85,6 +88,7 @@
 
     <ion-accordion value="Refrigerantes">
       <ion-item slot="header">
+        <ion-icon class="size" name="pint-outline"></ion-icon>
         <ion-label>Refrigerantes</ion-label>
       </ion-item>
       <ion-list slot="content">
@@ -109,6 +113,7 @@
 
     <ion-accordion value="Adicionais">
       <ion-item slot="header">
+        <ion-icon class="size" name="add-outline"></ion-icon>
         <ion-label>Adicionais</ion-label>
       </ion-item>
       <ion-list slot="content">
@@ -130,9 +135,35 @@
       </ion-list>
     </ion-accordion>
 
-    <ion-accordion value="Entregas">
+    <ion-accordion value="Descontos">
       <ion-item slot="header">
-        <ion-label>Entregas</ion-label>
+        <ion-icon class="size" name="wallet-outline"></ion-icon>
+        <ion-label>Descontos</ion-label>
+      </ion-item>
+      <ion-list slot="content">
+        <ion-item lines="full"  *ngFor="let e of descontos" (click)="adicionaItem(e.idProduto, e.nome)">
+          <ion-item>
+            <ion-thumbnail slot="start">
+              <img class="imagemProduto" [src]="e.imagem"/>
+            </ion-thumbnail>
+
+            <ion-label>
+              <div>
+                <h1>{{e.nome}}</h1>
+                <p>{{e.descricao}}</p>
+                <p>R$ {{e.valor}}</p>
+              </div>
+            </ion-label>
+          </ion-item>
+        </ion-item>
+      </ion-list>
+    </ion-accordion>
+
+    <ion-accordion value="Entregas">
+
+      <ion-item slot="header">
+        <ion-icon class="size" name="bicycle-outline"></ion-icon>
+        <ion-label> Entregas</ion-label>
       </ion-item>
       <ion-list slot="content">
         <ion-item lines="full"  *ngFor="let e of entregas" (click)="adicionaItem(e.idProduto, e.nome)">
@@ -152,6 +183,8 @@
         </ion-item>
       </ion-list>
     </ion-accordion>
+
+
   </ion-accordion-group>
 </ion-content>
 
