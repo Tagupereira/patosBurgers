@@ -1,3 +1,4 @@
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
 /* eslint-disable eqeqeq */
 /* eslint-disable @typescript-eslint/prefer-for-of */
 
@@ -5,6 +6,7 @@ import { Produto, ProdutosService } from './../services/produtos.service';
 import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { ActionSheetController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
 
 
 
@@ -27,153 +29,37 @@ export class Tab1Page implements OnInit{
 
 
 
+
   constructor(public toastController: ToastController,
     private service:  ProdutosService,
-    public action: ActionSheetController
-    ){
-      this.service.getAll().subscribe(response =>{
-        this.produtos = response;
-
-
-////////////// array de combos //////////////////
-        for(let i = 0; i < response.length; i++){
-
-          if(response[i].idCategoria==1){
-
-            this.combo.push({
-              idProduto: response[i].idProduto,
-              nome:response[i].nome,
-              descricao: response[i].descricao,
-              valor: response[i].valor,
-              imagem: response[i].imagem,
-              idCategoria: response[i].idCategoria
-            });
-
-          }
-
-        }
-////////////// array de individuais //////////////////
-        for(let i = 0; i < response.length; i++){
-
-          if(response[i].idCategoria==2){
-
-            this.individuais.push({
-              idProduto: response[i].idProduto,
-              nome:response[i].nome,
-              descricao: response[i].descricao,
-              valor: response[i].valor,
-              imagem: response[i].imagem,
-              idCategoria: response[i].idCategoria
-            });
-
-          }
-
-        }
-////////////// array de batatas //////////////////
-        for(let i = 0; i < response.length; i++){
-          if(response[i].idCategoria==3){
-
-            this.batatas.push({
-              idProduto: response[i].idProduto,
-              nome:response[i].nome,
-              descricao: response[i].descricao,
-              valor: response[i].valor,
-              imagem: response[i].imagem,
-              idCategoria: response[i].idCategoria
-            });
-
-          }
-
-        }
-////////////// array de refrigerantes //////////////////
-        for(let i = 0; i < response.length; i++){
-
-          if(response[i].idCategoria==4){
-
-            this.refrigerantes.push({
-              idProduto: response[i].idProduto,
-              nome:response[i].nome,
-              descricao: response[i].descricao,
-              valor: response[i].valor,
-              imagem: response[i].imagem,
-              idCategoria: response[i].idCategoria
-            });
-
-          }
-
-        }
-////////////// array de adicionais //////////////////
-        for(let i = 0; i < response.length; i++){
-
-          if(response[i].idCategoria==5){
-
-            this.adicionais.push({
-              idProduto: response[i].idProduto,
-              nome:response[i].nome,
-              descricao: response[i].descricao,
-              valor: response[i].valor,
-              imagem: response[i].imagem,
-              idCategoria: response[i].idCategoria
-            });
-
-          }
-
-        }
-////////////// array de entregas //////////////////
-        for(let i = 0; i < response.length; i++){
-
-          if(response[i].idCategoria==6){
-
-            this.entregas.push({
-              idProduto: response[i].idProduto,
-              nome:response[i].nome,
-              descricao: response[i].descricao,
-              valor: response[i].valor,
-              imagem: response[i].imagem,
-              idCategoria: response[i].idCategoria
-            });
-
-          }
-
-        }
-
-        for(let i = 0; i < response.length; i++){
-
-          if(response[i].idCategoria==7){
-
-            this.descontos.push({
-              idProduto: response[i].idProduto,
-              nome:response[i].nome,
-              descricao: response[i].descricao,
-              valor: response[i].valor,
-              imagem: response[i].imagem,
-              idCategoria: response[i].idCategoria
-            });
-
-          }
-
-        }
-      });
-
-      setTimeout(()=> {
-        this.service.getAll().subscribe(response =>{
-          this.produtos = response;
-
-        });
-      });
-
-    }
+    public action: ActionSheetController,
+    private modal: ModalController,
+    ){}
 
     doRefresh(event){
       setTimeout(() => {
-        this.service.getAll().subscribe(response =>{
-          this.produtos = response;
-        });
+        this.atualizaProdutos();
         event.target.complete();
+        console.log('refresh');
       }, 800);
     }
 
-  ngOnInit() {}
+    ionViewDidEnter() {
+      this.atualizaProdutos();
+      console.log('ionViewDidEnter');
+
+      history.pushState(null, null, document.URL);
+      window.addEventListener('popstate', function() {
+          history.pushState(null, null, document.URL);
+      });
+
+    }
+
+
+
+  ngOnInit() {
+
+  }
 
   adicionaItem(idProduto, nome){
     this.service.adicionar(idProduto).subscribe(response =>{
@@ -231,5 +117,139 @@ export class Tab1Page implements OnInit{
     await actionSheet.present();
   }
   ///////////////////////////
+
+  atualizaProdutos(){
+    this.service.getAll().subscribe(response =>{
+      this.produtos = response;
+
+    ////////////// array de combos //////////////////
+      for(let i = 0; i < response.length; i++){
+
+        if(response[i].idCategoria==1){
+
+          this.combo.push({
+            idProduto: response[i].idProduto,
+            nome:response[i].nome,
+            descricao: response[i].descricao,
+            valor: response[i].valor,
+            imagem: response[i].imagem,
+            idCategoria: response[i].idCategoria
+          });
+
+        }
+
+      }
+    ////////////// array de individuais //////////////////
+      for(let i = 0; i < response.length; i++){
+
+        if(response[i].idCategoria==2){
+
+          this.individuais.push({
+            idProduto: response[i].idProduto,
+            nome:response[i].nome,
+            descricao: response[i].descricao,
+            valor: response[i].valor,
+            imagem: response[i].imagem,
+            idCategoria: response[i].idCategoria
+          });
+
+        }
+
+      }
+    ////////////// array de batatas //////////////////
+      for(let i = 0; i < response.length; i++){
+        if(response[i].idCategoria==3){
+
+          this.batatas.push({
+            idProduto: response[i].idProduto,
+            nome:response[i].nome,
+            descricao: response[i].descricao,
+            valor: response[i].valor,
+            imagem: response[i].imagem,
+            idCategoria: response[i].idCategoria
+          });
+
+        }
+
+      }
+    ////////////// array de refrigerantes //////////////////
+      for(let i = 0; i < response.length; i++){
+
+        if(response[i].idCategoria==4){
+
+          this.refrigerantes.push({
+            idProduto: response[i].idProduto,
+            nome:response[i].nome,
+            descricao: response[i].descricao,
+            valor: response[i].valor,
+            imagem: response[i].imagem,
+            idCategoria: response[i].idCategoria
+          });
+
+        }
+
+      }
+    ////////////// array de adicionais //////////////////
+      for(let i = 0; i < response.length; i++){
+
+        if(response[i].idCategoria==5){
+
+          this.adicionais.push({
+            idProduto: response[i].idProduto,
+            nome:response[i].nome,
+            descricao: response[i].descricao,
+            valor: response[i].valor,
+            imagem: response[i].imagem,
+            idCategoria: response[i].idCategoria
+          });
+
+        }
+
+      }
+    ////////////// array de entregas //////////////////
+    for(let i = 0; i < response.length; i++){
+
+      if(response[i].idCategoria==6){
+
+          this.entregas.push({
+            idProduto: response[i].idProduto,
+            nome:response[i].nome,
+            descricao: response[i].descricao,
+            valor: response[i].valor,
+            imagem: response[i].imagem,
+            idCategoria: response[i].idCategoria
+          });
+
+        }
+
+      }
+      ////////////// array de descontos //////////////////
+      for(let i = 0; i < response.length; i++){
+
+        if(response[i].idCategoria==7){
+
+          this.descontos.push({
+            idProduto: response[i].idProduto,
+            nome:response[i].nome,
+            descricao: response[i].descricao,
+            valor: response[i].valor,
+            imagem: response[i].imagem,
+            idCategoria: response[i].idCategoria
+          });
+
+        }
+
+      }
+    });
+
+    setTimeout(()=> {
+      this.service.getAll().subscribe(response =>{
+        this.produtos = response;
+
+      });
+    });
+  }
+
+
 }
 

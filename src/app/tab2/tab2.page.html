@@ -3,7 +3,9 @@
     <ion-title>
       Pedidos
     </ion-title>
+    <ion-item slot="end" color="dark">{{sum | currency:'BRL':true:'1.2-2'}}</ion-item>
   </ion-toolbar>
+
 </ion-header>
 
 <ion-content [fullscreen]="true">
@@ -14,9 +16,9 @@
 
 
 
-  <ion-label *ngFor="let t of teste">
+  <ion-label *ngFor="let t of datas">
 
-    <ion-item color="success" size="large"> {{t[0]}}</ion-item>
+    <ion-item color="success" size="large"> {{t[0] | date :'fullDate'}}</ion-item>
 
     <ion-item *ngFor="let y of t" (click)="abrirModal(y.codPedido, y.valor, y.cliente, y.tipo, y.dataPedido)" >
 

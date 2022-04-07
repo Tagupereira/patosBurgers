@@ -1,3 +1,4 @@
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
 
 import { Component, OnInit } from '@angular/core';
 import { AlertController } from '@ionic/angular';
@@ -51,6 +52,12 @@ export class Tab3Page implements OnInit{
           this.soma = response[0][0].valorTotal;
         }
       });
+
+      history.pushState(null, null, document.URL);
+      window.addEventListener('popstate', function() {
+          history.pushState(null, null, document.URL);
+      });
+
     }
     doRefresh(event){
       setTimeout(() => {

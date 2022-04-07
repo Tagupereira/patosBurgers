@@ -1,4 +1,5 @@
-import { ToastController } from '@ionic/angular';
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
+import { ModalController, ToastController } from '@ionic/angular';
 import { PagamentoService } from './../services/pagamento.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
@@ -23,7 +24,10 @@ export class PagamentoPage implements OnInit {
   constructor( private route: ActivatedRoute,
     private rota: Router,
     private pay: PagamentoService,
-    public toast: ToastController) {}
+    public toast: ToastController,
+    private modal: ModalController,
+    ) {}
+
 
   fecharPagamento(){
     this.rota.navigateByUrl('/tabs/tab3');
@@ -73,6 +77,15 @@ export class PagamentoPage implements OnInit {
       this.color='danger';
       this.verificaToast();
     }
+
+  }
+
+  ionViewDidEnter() {
+
+    history.pushState(null, null, document.URL);
+    window.addEventListener('popstate', function() {
+        history.pushState(null, null, document.URL);
+    });
 
   }
 

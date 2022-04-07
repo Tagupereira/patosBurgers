@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/prefer-for-of */
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 
 
@@ -18,45 +17,21 @@ export class Tab2Page implements OnInit{
 
   pedidoData = {};
 
-  teste;
+  datas;
+
+  valorAtual = 0.00;
+  sum = 0.00;
 
   constructor(private service: PedidoService,
     public alert: AlertController,
-    private modal: ModalController){
-
-      this.service.getAll().subscribe(response =>{
-        this.pedido = response;
-
-
-        this.pedidoData = this.pedido.reduce(function(acumulador, datArray){
-          if(!acumulador[datArray.dataPedido]){
-            acumulador[datArray.dataPedido] = [datArray.dataPedido];
-          }
-          acumulador[datArray.dataPedido].push(datArray);
-          return acumulador;
-
-        }, {});
-
-        this.teste = Object.values(this.pedidoData);
-        console.log(this.teste);
-
-      });
-    }
-
-
-
-
-
-
-
-
+    private modal: ModalController){}
 
   doRefresh(event){
     setTimeout(() => {
       this.service.getAll().subscribe(response =>{
         this.pedido = response;
+        this.atualizaPedidos();
       });
-      //console.log('atualizei');
       event.target.complete();
     }, 800);
   }
@@ -64,6 +39,12 @@ export class Tab2Page implements OnInit{
   ionViewDidEnter() {
     this.service.getAll().subscribe(response =>{
       this.pedido = response;
+      this.atualizaPedidos();
+    });
+
+    history.pushState(null, null, document.URL);
+    window.addEventListener('popstate', function() {
+        history.pushState(null, null, document.URL);
     });
 
   }
@@ -87,5 +68,26 @@ export class Tab2Page implements OnInit{
 
   ngOnInit() {}
 
+  public atualizaPedidos(){
+    this.pedidoData = this.pedido.reduce(function(acumulador, datArray){
+      if(!acumulador[datArray.dataPedido]){
+        acumulador[datArray.dataPedido] = [datArray.dataPedido];
+      }
+      acumulador[datArray.dataPedido].push(datArray);
+      return acumulador;
+
+    }, {});
+
+    this.datas = Object.values(this.pedidoData);
+
+    this.sum = 0.00;
+
+    for(let i = 0; i < this.datas.length; i++){
+
+      this.valorAtual = Number(this.datas[0][i+1].valor);
+      this.sum = this.valorAtual + this.sum;
+
+    }
+  }
 
 }
