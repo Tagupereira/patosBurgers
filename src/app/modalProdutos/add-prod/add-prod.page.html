@@ -1,0 +1,50 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title> {{titulo}} </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-item>
+
+    <ion-thumbnail>
+      <ion-img [src]='foto'></ion-img>
+    </ion-thumbnail>
+
+  </ion-item>
+
+
+
+    <ion-item>
+      <ion-label position="floating">Nome do Produto</ion-label>
+      <ion-input (ionChange)="nome($event)"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label position="floating">Preço de Venda</ion-label>
+      <ion-input type="number" max="8" (ionChange)="valor($event)"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label>Categoria</ion-label>
+      <ion-select interface="popover" placeholder="Selecionar" required>
+        <ion-select-option value="red">Red</ion-select-option>
+        <ion-select-option value="purple">Purple</ion-select-option>
+        <ion-select-option value="yellow">Yellow</ion-select-option>
+        <ion-select-option value="orange">Orange</ion-select-option>
+        <ion-select-option value="green">Green</ion-select-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <label for="arquivo" id="label">{{label}}</label>
+      <input type="file" id="arquivo" accept="image/*" (change)="onChange($event)"/>
+    </ion-item>
+
+</ion-content>
+
+
+<ion-footer>
+  <ion-button size="large" expand="block"  color="success" (click)="adicionarProduto()" [disabled]="!price"> Adicionar Produto </ion-button>
+
+</ion-footer>
+

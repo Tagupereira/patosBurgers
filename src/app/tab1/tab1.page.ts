@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 import { ToastController } from '@ionic/angular';
 import { ActionSheetController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
-
+import { Router, ActivatedRoute } from '@angular/router';
 
 
 @Component({
@@ -34,6 +34,7 @@ export class Tab1Page implements OnInit{
     private service:  ProdutosService,
     public action: ActionSheetController,
     private modal: ModalController,
+    private route: Router,
     ){}
 
     doRefresh(event){
@@ -92,7 +93,7 @@ export class Tab1Page implements OnInit{
           type: 'delete'
         },
         handler: () => {
-          console.log('Novo Produto');
+          this.route.navigateByUrl('add-prod');
         }
       },{
           text: 'Nova Categoria',
@@ -104,13 +105,13 @@ export class Tab1Page implements OnInit{
             console.log('categoria');
           }
         },{
-          text: 'Excluir Produto',
-          icon: 'close',
+          text: 'Editar Produto',
+          icon: 'color-wand-outline',
           data: {
-            type: 'Excluir Produto'
+            type: 'Editar Produto'
           },
           handler: () => {
-            console.log('Excluir Produto');
+            console.log('Editar Produto');
           }
       }]
     });
