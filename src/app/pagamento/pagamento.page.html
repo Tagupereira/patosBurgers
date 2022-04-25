@@ -42,14 +42,21 @@
     <h5 slot="end"># {{codPedido}}</h5>
   </ion-item>
 
-  <ion-item lines="full" class="entrega">
-    <h4>Entrega: </h4>
-    <h5 slot="end">R$ 0,00</h5>
+
+  <ion-item  lines="full" class="entrega" >
+
+    <ion-select [(ngModel)]="valEnt" (ionChange)="preco($event)" interface="popover" placeholder="Entrega" slot="end">
+
+      <ion-select-option *ngFor="let i of listaEntregas" [value]="i.idEntrega">
+        {{i.local}} - {{ i.valor | currency:'BRL'}}
+      </ion-select-option>
+
+    </ion-select>
   </ion-item>
 
   <ion-item lines="full">
     <h1>Total: </h1>
-    <h2 slot="end">R$ {{soma}}</h2>
+    <h2 slot="end">{{ soma | currency:'BRL' }}</h2>
   </ion-item>
 
   <ion-button class="btnPagamento"color="medium" expand="full" fill="none" size="large" ><h2>{{codPagamento}} - {{pagamento}}</h2></ion-button>

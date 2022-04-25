@@ -1,3 +1,5 @@
+/* eslint-disable radix */
+/* eslint-disable @typescript-eslint/quotes */
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
 import { Produto, ProdutosService } from './../../services/produtos.service';
 
@@ -22,7 +24,7 @@ export class AddProdPage implements OnInit {
 
   product: string ;
   price;
-  totalPreco;
+  valorView;
 
   constructor(private service: ProdutosService) {}
 
@@ -32,6 +34,7 @@ export class AddProdPage implements OnInit {
   }
   valor(event){
     this.price = event.target.value;
+
   }
 
   onChange(event){
@@ -50,7 +53,7 @@ export class AddProdPage implements OnInit {
 
   adicionarProduto(){
     if(!this.product){
-      console.log('informe o nome do produto');
+      alert('informe o nome do produto');
     }else{
       this.service.addimagem(this.imagem, this.product, this.price);
       //this.adicionadoToast(nome);
@@ -58,9 +61,26 @@ export class AddProdPage implements OnInit {
 
   }
 
+  formatarMoeda() {
+
+    let valor = this.price;
+    valor = valor + '';
+    valor = parseInt(valor.replace(/[\D]+/g,''));
+    valor = valor + '';
+    valor = valor.replace(/([0-9]{2})$/g, ".$1");
+
+    if (valor.length > 6) {
+      valor = valor.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1.$2");
+      //se quiser alterar a , por . so alterar no trecho acima $1.$2;
+    }
+    else if (isNaN(valor)){
+      valor = '0.00';
+    }
+
+    this.price = valor;
+    this.valorView = 'R$ '+ valor;
+
+  }
+
   ngOnInit() {}
-
-
 }
-
-

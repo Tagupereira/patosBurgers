@@ -27,9 +27,6 @@ export class Tab1Page implements OnInit{
   entregas = [];
   descontos = [];
 
-
-
-
   constructor(public toastController: ToastController,
     private service:  ProdutosService,
     public action: ActionSheetController,
@@ -39,33 +36,39 @@ export class Tab1Page implements OnInit{
 
     doRefresh(event){
       setTimeout(() => {
-        this.atualizaProdutos();
+        //this.atualizaProdutos();
         event.target.complete();
-        console.log('refresh');
-      }, 800);
+        //console.log('refresh');
+      },800);
     }
 
     ionViewDidEnter() {
-      this.atualizaProdutos();
-      console.log('ionViewDidEnter');
+     // aqui seta todos os arrays de produtos para vazios evitando duplicidade de dados ou ser atualizada a pagina
+      this.combo = [];
+      this.individuais = [];
+      this.batatas = [];
+      this.refrigerantes = [];
+      this.adicionais = [];
+      this.entregas = [];
+      this.descontos = [];
 
-      history.pushState(null, null, document.URL);
-      window.addEventListener('popstate', function() {
-          history.pushState(null, null, document.URL);
+      this.atualizaProdutos();
+      //esta função bloqueia o botao back no app
+        history.pushState(null, null, document.URL);
+        window.addEventListener('popstate', function() {
+            history.pushState(null, null, document.URL);
       });
 
     }
 
-
-
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   adicionaItem(idProduto, nome){
+    //esta função adiciona itens ao carrinho de compra
     this.service.adicionar(idProduto).subscribe(response =>{
 
     });
+    // emite um alerta de adicionado com sucesso
     this.adicionadoToast(nome);
   }
 
@@ -113,13 +116,24 @@ export class Tab1Page implements OnInit{
           handler: () => {
             console.log('Editar Produto');
           }
-      }]
+      },{
+        text: 'Entregas',
+        icon: 'bicycle',
+        data: {
+          type: 'Entregas'
+        },
+        handler: () => {
+          this.route.navigateByUrl('entregas');
+        }
+    }]
     });
     await actionSheet.present();
   }
   ///////////////////////////
 
   atualizaProdutos(){
+    // função responsavel por receber os dados dos produtos cadastrados
+    // alimentando os arrays.
     this.service.getAll().subscribe(response =>{
       this.produtos = response;
 
@@ -208,22 +222,22 @@ export class Tab1Page implements OnInit{
 
       }
     ////////////// array de entregas //////////////////
-    for(let i = 0; i < response.length; i++){
+    // for(let i = 0; i < response.length; i++){
 
-      if(response[i].idCategoria==6){
+    //   if(response[i].idCategoria==6){
 
-          this.entregas.push({
-            idProduto: response[i].idProduto,
-            nome:response[i].nome,
-            descricao: response[i].descricao,
-            valor: response[i].valor,
-            imagem: response[i].imagem,
-            idCategoria: response[i].idCategoria
-          });
+    //       this.entregas.push({
+    //         idProduto: response[i].idProduto,
+    //         nome:response[i].nome,
+    //         descricao: response[i].descricao,
+    //         valor: response[i].valor,
+    //         imagem: response[i].imagem,
+    //         idCategoria: response[i].idCategoria
+    //       });
 
-        }
+    //     }
 
-      }
+    //   }
       ////////////// array de descontos //////////////////
       for(let i = 0; i < response.length; i++){
 

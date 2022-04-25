@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
-
 
 import { ModalPage } from './../modal/modal.page';
 import { AlertController, ModalController } from '@ionic/angular';
@@ -14,17 +14,17 @@ import { Component, OnInit } from '@angular/core';
 
 export class Tab2Page implements OnInit{
   pedido: Pedido[];
-
   pedidoData = {};
-
   datas;
-
   valorAtual = 0.00;
+  valorEntrega = 0.00;
   sum = 0.00;
 
-  constructor(private service: PedidoService,
+  constructor(
+    private service: PedidoService,
     public alert: AlertController,
-    private modal: ModalController){}
+    private modal: ModalController
+  ){}
 
   doRefresh(event){
     setTimeout(() => {
@@ -40,6 +40,7 @@ export class Tab2Page implements OnInit{
     this.service.getAll().subscribe(response =>{
       this.pedido = response;
       this.atualizaPedidos();
+      console.log(this.pedidoData);
     });
 
     history.pushState(null, null, document.URL);
@@ -49,13 +50,15 @@ export class Tab2Page implements OnInit{
 
   }
 
-  async abrirModal(codPedido, valor, cliente,tipo, dataPedido){
+  async abrirModal(codPedido, valor, local, preco, cliente,tipo, dataPedido){
     if(valor > 0 ){
       const modal = await this.modal.create({
         component: ModalPage,
         componentProps: {
           cod: codPedido,
           total: valor,
+          bairro: local,
+          valEnt: preco,
           nomeCliente: cliente,
           tipoPag: tipo,
           data: dataPedido
@@ -65,8 +68,6 @@ export class Tab2Page implements OnInit{
       modal.present();
     }
   }
-
-  ngOnInit() {}
 
   public atualizaPedidos(){
     this.pedidoData = this.pedido.reduce(function(acumulador, datArray){
@@ -85,9 +86,12 @@ export class Tab2Page implements OnInit{
     for(let i = 0; i < this.datas.length; i++){
 
       this.valorAtual = Number(this.datas[0][i+1].valor);
-      this.sum = this.valorAtual + this.sum;
+      this.valorEntrega = Number(this.datas[0][i+1].preco);
 
+      this.sum = this.valorAtual + this.valorEntrega + this.sum;
     }
+
   }
 
+  ngOnInit() {}
 }

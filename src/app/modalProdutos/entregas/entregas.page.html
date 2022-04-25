@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-title>
+      Entregas
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" >
+    <ion-refresher-content></ion-refresher-content>
+  </ion-refresher>
+
+  <ion-label *ngFor="let x of datas">
+
+    <ion-item color="primary" size="large" slot="header"> {{x[0] | date :'fullDate'}}</ion-item>
+    <!-- o slice(1) tem a função de pular o primeiro elemento do array X que no caso era vazio-->
+   <ion-item slot="content" *ngFor="let y of x.slice(1)" lines="none" [hidden]="y.idEntrega < 2">
+
+      <ion-item  lines="none" slot="start" >
+        {{y.idEntrega}}.{{y.local}}
+      </ion-item>
+
+      <ion-item lines="none" slot="end">
+        # {{y.preco}}
+      </ion-item>
+
+    </ion-item>
+
+
+  </ion-label>
+</ion-content>
+
+<ion-footer>
+  <ion-button expand="full" size="large" (click)="fechar()" color="danger">fechar</ion-button>
+</ion-footer>
+

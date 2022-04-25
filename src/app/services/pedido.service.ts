@@ -16,7 +16,10 @@ export interface Pedido{
   produto: string;
   idCategoria: number;
   tipo: string;
+  idEntrega: number;
 }
+
+
 
 
 @Injectable({

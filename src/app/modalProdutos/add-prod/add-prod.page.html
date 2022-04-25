@@ -18,11 +18,11 @@
 
     <ion-item>
       <ion-label position="floating">Nome do Produto</ion-label>
-      <ion-input (ionChange)="nome($event)"></ion-input>
+      <ion-input (ionChange)="nome($event)" maxlength="30" focus></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Preço de Venda</ion-label>
-      <ion-input type="number" max="8" (ionChange)="valor($event)"></ion-input>
+      <ion-input type="tel" id="valor" maxlength="9" (ionChange)="valor($event)" (keyup)="formatarMoeda()" value="{{valorView}}"></ion-input>
     </ion-item>
 
     <ion-item>

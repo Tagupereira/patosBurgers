@@ -34,6 +34,6 @@ export class ProdutosService {
 
   addimagem(img, produto, valor){
     alert('Produto Adicionado \n '+'Produto: '+produto+'\n Preço: '+valor+'\n Imagem: '+img);
-    //return this.http.post(this.url1, img);
+    //return this.http.post(this.url, produto);
   }
 }

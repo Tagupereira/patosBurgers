@@ -3,9 +3,9 @@
     <ion-title>
       Pedidos
     </ion-title>
-    <ion-item slot="end" color="dark">{{sum | currency:'BRL':true:'1.2-2'}}</ion-item>
-  </ion-toolbar>
 
+    <ion-item slot="end" color="dark">{{sum | currency:'BRL'}}</ion-item>
+  </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
@@ -14,24 +14,19 @@
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
+  <ion-label *ngFor="let x of datas">
 
-
-  <ion-label *ngFor="let t of datas">
-
-    <ion-item color="success" size="large"> {{t[0] | date :'fullDate'}}</ion-item>
-
-    <ion-item *ngFor="let y of t" (click)="abrirModal(y.codPedido, y.valor, y.cliente, y.tipo, y.dataPedido)" >
-
+    <ion-item color="success" size="large" slot="header"> {{x[0] | date :'fullDate'}}</ion-item>
+    <!-- o slice(1) tem a função de pular o primeiro elemento do array X que no caso era vazio-->
+    <ion-item slot="content" *ngFor="let y of x.slice(1)" (click)="abrirModal(y.codPedido, y.valor, y.local, y.preco, y.cliente, y.tipo, y.dataPedido)" >
       {{y.cliente}}
 
-        <ion-item lines="none" slot="end" >
-          # {{y.codPedido}}
-        </ion-item>
+      <ion-item lines="none" slot="end" >
+        # {{y.codPedido}}
+      </ion-item>
 
     </ion-item>
 
   </ion-label>
-
-
 </ion-content>
 
