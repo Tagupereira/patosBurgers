@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
 
@@ -5,6 +6,7 @@ import { ModalPage } from './../modal/modal.page';
 import { AlertController, ModalController } from '@ionic/angular';
 import { Pedido,PedidoService } from './../services/pedido.service';
 import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-tab2',
@@ -19,11 +21,14 @@ export class Tab2Page implements OnInit{
   valorAtual = 0.00;
   valorEntrega = 0.00;
   sum = 0.00;
+  cont = 0;
+  senhaAdmin = 'admin';
 
   constructor(
     private service: PedidoService,
     public alert: AlertController,
-    private modal: ModalController
+    private modal: ModalController,
+    private route: Router
   ){}
 
   doRefresh(event){
@@ -40,7 +45,6 @@ export class Tab2Page implements OnInit{
     this.service.getAll().subscribe(response =>{
       this.pedido = response;
       this.atualizaPedidos();
-      console.log(this.pedidoData);
     });
 
     history.pushState(null, null, document.URL);
@@ -49,8 +53,8 @@ export class Tab2Page implements OnInit{
     });
 
   }
-
   async abrirModal(codPedido, valor, local, preco, cliente,tipo, dataPedido){
+    //this.modal.dismiss();
     if(valor > 0 ){
       const modal = await this.modal.create({
         component: ModalPage,
@@ -83,15 +87,73 @@ export class Tab2Page implements OnInit{
 
     this.sum = 0.00;
 
-    for(let i = 0; i < this.datas.length; i++){
+    for(let i = 0; i <= this.datas[0].length; i++){
 
       this.valorAtual = Number(this.datas[0][i+1].valor);
       this.valorEntrega = Number(this.datas[0][i+1].preco);
 
       this.sum = this.valorAtual + this.valorEntrega + this.sum;
+
     }
 
   }
+
+  public valida(){
+    this.route.navigateByUrl('totais');
+    if (this.cont < 3){
+
+      if(this.cont === 2){
+        const senha = prompt('Não lembra a senha? chame o administrador:');
+        if(senha === null){
+          this.cont =  this.cont;
+        }else{
+
+          if (senha === this.senhaAdmin){
+            this.route.navigateByUrl('totais');
+            this.cont = 0;
+          }
+          else{
+
+            this.cont = this.cont + 1;
+            alert('Acesso negado - tentativa '+ this.cont);
+          }
+        }
+
+      }else{
+        const senha = prompt('informe a senha:');
+
+        if(senha === null){
+          this.route.navigateByUrl('tabs/tab2');
+          this.cont = this.cont;
+
+        }else{
+
+          if (senha === this.senhaAdmin){
+            this.route.navigateByUrl('totais');
+            this.cont = 0;
+
+          }
+          else{
+
+            this.cont = this.cont + 1;
+            alert('Acesso negado - tentativa '+ this.cont);
+            this.route.navigateByUrl('tabs/tab2');
+          }
+        }
+      }
+
+    }
+    else{
+      const admin = prompt('Acesso bloqueado, digite a senha de Administrador');
+      if (admin === this.senhaAdmin){
+        this.cont = 0;
+        alert('Reiniciado com sucesso');
+      }
+    }
+
+  }
+///// fim da validação para acesso ao totais do dia do app///////////
+
 
   ngOnInit() {}
 }

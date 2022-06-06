@@ -1,10 +1,16 @@
+/* eslint-disable @typescript-eslint/dot-notation */
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
+/* eslint-disable @typescript-eslint/prefer-for-of */
 /* eslint-disable radix */
 /* eslint-disable @typescript-eslint/quotes */
 /* eslint-disable @typescript-eslint/consistent-type-assertions */
+import { Categoria } from './../../services/produtos.service';
 import { Produto, ProdutosService } from './../../services/produtos.service';
 
-
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Subscriber } from 'rxjs';
+import { ToastController } from '@ionic/angular';
 
 
 @Component({
@@ -13,11 +19,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-prod.page.scss'],
 })
 
-export class AddProdPage implements OnInit {
+export class AddProdPage implements OnInit, OnDestroy {
 
   files: Set<File>;
   titulo = 'Novo Produto';
-  imagem = 'assets/img/produtos/maisTeste.jpg';
+  imagem = 'assets/img/produtos/qualquer.jpg';
   foto = 'assets/img/produtos/maisTeste.jpg';
   label = 'Adicionar imagem';
   caminho = 'assets/img/produtos/';
@@ -25,16 +31,43 @@ export class AddProdPage implements OnInit {
   product: string ;
   price;
   valorView;
+  cat;
+  precoProduto;
 
-  constructor(private service: ProdutosService) {}
+  categoria: Categoria[];
+  listaCategorias = [];
+  adiciona = {};
+
+  constructor(
+    public toastController: ToastController,
+    private service: ProdutosService,
+    private rota: Router) {}
+
+  ngOnInit() {
+    this.service.getAllCat().subscribe(response =>{
+      this.categoria = response;
+
+    /////// for para adicionar dados do dia atual no array
+      for (let i = 0; i < this.categoria.length; i++){
+        this.listaCategorias.push(this.categoria[i]);
+      }
+    });
+  }
+
+  ionViewDidEnter() {
+    this.noBack();
+  }
 
   nome(event){
     this.product = event.target.value;
-
   }
+
   valor(event){
     this.price = event.target.value;
+  }
 
+  category(event){
+    this.cat = event.target.value;
   }
 
   onChange(event){
@@ -48,6 +81,7 @@ export class AddProdPage implements OnInit {
     this.foto = URL.createObjectURL(event.target.files[0]);
 
     this.label = 'Imagem: '+ imgGet;
+    console.log(files);
 
   }
 
@@ -55,10 +89,33 @@ export class AddProdPage implements OnInit {
     if(!this.product){
       alert('informe o nome do produto');
     }else{
-      this.service.addimagem(this.imagem, this.product, this.price);
-      //this.adicionadoToast(nome);
+      this.adiciona["nome"] = this.product;
+      this.adiciona["preco"] = this.precoProduto;
+      this.adiciona["categoria"] = this.cat;
+      this.adiciona["imagem"] = this.imagem;
+
+      const adiciona = this.adiciona;
+
+      this.service.cadastrarProduto(adiciona).subscribe(response=>{
+
+        this.adicionadoToast();
+        this.rota.navigateByUrl('/');
+      });
+
     }
 
+  }
+
+  fechar(){
+    this.rota.navigateByUrl('/');
+  }
+
+  noBack(){
+    //esta função bloqueia o botao back no app
+    history.pushState(null, null, document.URL);
+    window.addEventListener('popstate', function() {
+        history.pushState(null, null, document.URL);
+    });
   }
 
   formatarMoeda() {
@@ -79,8 +136,34 @@ export class AddProdPage implements OnInit {
 
     this.price = valor;
     this.valorView = 'R$ '+ valor;
+    this.precoProduto = valor;
 
   }
 
-  ngOnInit() {}
+  resetar(){
+    this.listaCategorias = [];
+    this.price = '';
+    this.valorView = '';
+    this.cat = '';
+    this.imagem = 'assets/img/produtos/qualquer.jpg';
+
+  }
+
+  // codigo toast alert
+  async adicionadoToast() {
+    const toast = await this.toastController.create({
+      message: 'Produto Adicionado com sucesso',
+      duration: 2000,
+      color: 'primary',
+      position: 'top'
+
+    });
+    toast.present();
+  }
+
+  ngOnDestroy(): void {
+    this.noBack();
+    this.resetar();
+  }
+
 }

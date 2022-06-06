@@ -3,8 +3,8 @@
 /* eslint-disable @typescript-eslint/prefer-for-of */
 
 import { Produto, ProdutosService } from './../services/produtos.service';
-import { Component, OnInit } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { IonAccordionGroup, ToastController } from '@ionic/angular';
 import { ActionSheetController } from '@ionic/angular';
 import { ModalController } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -16,6 +16,7 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page implements OnInit{
+  @ViewChild(IonAccordionGroup, { static: true }) accordionGroup: IonAccordionGroup;
 
   titulo = 'Balcão';
   produtos: Produto[];
@@ -24,15 +25,18 @@ export class Tab1Page implements OnInit{
   batatas = [];
   refrigerantes = [];
   adicionais = [];
-  entregas = [];
+  doces = [];
   descontos = [];
 
-  constructor(public toastController: ToastController,
+  constructor(
+    public toastController: ToastController,
     private service:  ProdutosService,
     public action: ActionSheetController,
     private modal: ModalController,
     private route: Router,
-    ){}
+    ){
+      this.noBack();
+    }
 
     doRefresh(event){
       setTimeout(() => {
@@ -49,14 +53,20 @@ export class Tab1Page implements OnInit{
       this.batatas = [];
       this.refrigerantes = [];
       this.adicionais = [];
-      this.entregas = [];
+      this.doces = [];
       this.descontos = [];
 
+
       this.atualizaProdutos();
+      this.noBack();
+      this.accordionGroup.value = undefined;
+
+    }
+    noBack(){
       //esta função bloqueia o botao back no app
-        history.pushState(null, null, document.URL);
-        window.addEventListener('popstate', function() {
-            history.pushState(null, null, document.URL);
+      history.pushState(null, null, document.URL);
+      window.addEventListener('popstate', function() {
+          history.pushState(null, null, document.URL);
       });
 
     }
@@ -64,12 +74,14 @@ export class Tab1Page implements OnInit{
   ngOnInit() {}
 
   adicionaItem(idProduto, nome){
+
     //esta função adiciona itens ao carrinho de compra
     this.service.adicionar(idProduto).subscribe(response =>{
 
     });
     // emite um alerta de adicionado com sucesso
     this.adicionadoToast(nome);
+
   }
 
 // codigo toast alert
@@ -221,23 +233,23 @@ export class Tab1Page implements OnInit{
         }
 
       }
-    ////////////// array de entregas //////////////////
-    // for(let i = 0; i < response.length; i++){
+    ////////////// array de doces //////////////////
+    for(let i = 0; i < response.length; i++){
 
-    //   if(response[i].idCategoria==6){
+      if(response[i].idCategoria==6){
 
-    //       this.entregas.push({
-    //         idProduto: response[i].idProduto,
-    //         nome:response[i].nome,
-    //         descricao: response[i].descricao,
-    //         valor: response[i].valor,
-    //         imagem: response[i].imagem,
-    //         idCategoria: response[i].idCategoria
-    //       });
+          this.doces.push({
+            idProduto: response[i].idProduto,
+            nome:response[i].nome,
+            descricao: response[i].descricao,
+            valor: response[i].valor,
+            imagem: response[i].imagem,
+            idCategoria: response[i].idCategoria
+          });
 
-    //     }
+        }
 
-    //   }
+      }
       ////////////// array de descontos //////////////////
       for(let i = 0; i < response.length; i++){
 

@@ -53,10 +53,23 @@ export class ModalPage implements OnInit {
 
     if (month < 10) {
       const mes = '0' + month;
-      this.dateForm = day +'-'+ mes +'-' + year;
+
+      if (day < 10) {
+        const dia = '0' + day;
+        this.dateForm = dia +'-'+ mes +'-' + year;
+
+      }else{
+        this.dateForm = day +'-'+ mes +'-' + year;
+      }
+
     }else{
-      const mes = month;
-      this.dateForm = day +'-'+ mes +'-' + year;
+      if (day < 10) {
+        const dia = '0' + day;
+        this.dateForm = dia +'-'+ month +'-' + year;
+
+      }else{
+        this.dateForm = day +'-'+ month +'-' + year;
+      }
     }
 
     if(this.data === this.dateForm){
@@ -82,11 +95,15 @@ export class ModalPage implements OnInit {
         ]
       });
     await alert.present();
+
     }
     else{
     this.msg = "Você nao tem permissâo para excluir o pedido";
     this.colorToast = "warning";
     this.canceladoToast();
+    console.log('data', this.data);
+    console.log('date', this.dateForm);
+
     }
   }
 

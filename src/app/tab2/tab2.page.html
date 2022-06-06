@@ -4,7 +4,8 @@
       Pedidos
     </ion-title>
 
-    <ion-item slot="end" color="dark">{{sum | currency:'BRL'}}</ion-item>
+    <!--<ion-item slot="end" color="dark">{{sum | currency:'BRL'}}</ion-item>-->
+    <ion-item slot="end" color="dark" (click)="valida()">{{sum | currency:'BRL'}}</ion-item>
   </ion-toolbar>
 </ion-header>
 
@@ -30,3 +31,5 @@
   </ion-label>
 </ion-content>
 
+<ion-footer>
+</ion-footer>

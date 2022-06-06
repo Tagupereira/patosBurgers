@@ -1,6 +1,7 @@
 <ion-header>
   <ion-toolbar color="dark">
     <ion-title> {{titulo}} </ion-title>
+    <ion-item lines="none" slot="end" color="dark" (click)="fechar()"><ion-icon name="close" ></ion-icon></ion-item>
   </ion-toolbar>
 </ion-header>
 
@@ -14,37 +15,31 @@
 
   </ion-item>
 
+  <ion-item>
+    <ion-label position="floating">Nome do Produto</ion-label>
+    <ion-input id="nome" (ionChange)="nome($event)" maxlength="30" required="true"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Preço de Venda</ion-label>
+    <ion-input type="tel" id="valor" maxlength="9" (ionChange)="valor($event)" (keyup)="formatarMoeda()" value="{{valorView}}" required="true"></ion-input>
+  </ion-item>
 
+  <ion-item>
+    <ion-label>Categoria</ion-label>
+    <ion-select id="categoria" interface="popover" placeholder="Selecionar" required="true" (ionChange)=" category($event)" >
+      <ion-select-option *ngFor="let i of listaCategorias" [value]="i.idCategoria">
+        {{i.nome}}
+      </ion-select-option>
 
-    <ion-item>
-      <ion-label position="floating">Nome do Produto</ion-label>
-      <ion-input (ionChange)="nome($event)" maxlength="30" focus></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label position="floating">Preço de Venda</ion-label>
-      <ion-input type="tel" id="valor" maxlength="9" (ionChange)="valor($event)" (keyup)="formatarMoeda()" value="{{valorView}}"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label>Categoria</ion-label>
-      <ion-select interface="popover" placeholder="Selecionar" required>
-        <ion-select-option value="red">Red</ion-select-option>
-        <ion-select-option value="purple">Purple</ion-select-option>
-        <ion-select-option value="yellow">Yellow</ion-select-option>
-        <ion-select-option value="orange">Orange</ion-select-option>
-        <ion-select-option value="green">Green</ion-select-option>
-      </ion-select>
-    </ion-item>
-    <ion-item>
-      <label for="arquivo" id="label">{{label}}</label>
-      <input type="file" id="arquivo" accept="image/*" (change)="onChange($event)"/>
-    </ion-item>
+    </ion-select>
+  </ion-item>
+  <ion-item>
+    <label for="arquivo" id="label">{{label}}</label>
+    <input type="file" id="arquivo" accept="image/*" (change)="onChange($event)"/>
+  </ion-item>
 
 </ion-content>
 
-
 <ion-footer>
   <ion-button size="large" expand="block"  color="success" (click)="adicionarProduto()" [disabled]="!price"> Adicionar Produto </ion-button>
-
 </ion-footer>
-

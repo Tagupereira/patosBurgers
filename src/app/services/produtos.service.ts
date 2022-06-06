@@ -12,6 +12,13 @@ export interface Produto{
 
 }
 
+export interface Categoria{
+
+  idCategoria: any;
+  nome: string;
+
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -20,20 +27,24 @@ export class ProdutosService {
 
   private url1 = 'http://192.168.0.106/PROJETOS/API/carrinhoA';
 
+  private urlCat = 'http://192.168.0.106/PROJETOS/API/categoria';
+
   constructor(private http: HttpClient) {}
 
   getAll(){
-    //return this.http.get<[Produto]>(this.url);
     return this.http.get<[Produto]>(this.url);
   }
 
   adicionar(addProduto: number){
-    //console.log(addProduto);
     return this.http.post(this.url1, addProduto);
   }
 
-  addimagem(img, produto, valor){
-    alert('Produto Adicionado \n '+'Produto: '+produto+'\n Preço: '+valor+'\n Imagem: '+img);
-    //return this.http.post(this.url, produto);
+  cadastrarProduto(adiciona){
+    return this.http.post(this.url, adiciona);
+  }
+
+  getAllCat(){
+    //return this.http.get<[Produto]>(this.url);
+    return this.http.get<[Categoria]>(this.urlCat);
   }
 }

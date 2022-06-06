@@ -21,6 +21,10 @@ const routes: Routes = [
   {
     path: 'entregas',
     loadChildren: () => import('./modalProdutos/entregas/entregas.module').then( m => m.EntregasPageModule)
+  },
+  {
+    path: 'totais',
+    loadChildren: () => import('./totais/totais.module').then( m => m.TotaisPageModule)
   }
 ];
 @NgModule({

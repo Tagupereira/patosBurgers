@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar color="dark">
+
+    <ion-title slot="start">TOTAIS</ion-title>
+    <ion-title slot="end"><h5>{{dateForm | date :'longDate'}}</h5></ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+
+    <ion-item >
+      <ion-label>CRÉDITO</ion-label>
+      <ion-text> {{credito | currency:'BRL'}}</ion-text>
+    </ion-item>
+
+    <ion-item >
+      <ion-label>DÉBITO</ion-label>
+      <ion-text> {{debito | currency:'BRL'}}</ion-text>
+    </ion-item>
+
+    <ion-item >
+      <ion-label>DINHEIRO</ion-label>
+      <ion-text> {{dinheiro | currency:'BRL'}}</ion-text>
+    </ion-item>
+
+    <ion-item >
+      <ion-label>PIX</ion-label>
+      <ion-text> {{pix | currency:'BRL'}}</ion-text>
+    </ion-item>
+
+    <ion-item lines="none" color="success">
+      <ion-label></ion-label>
+      <ion-text> {{total | currency:'BRL'}}</ion-text>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-list>
+    <ion-item >
+      <ion-label>ENTREGAS</ion-label>
+      <ion-text>{{entregas}}</ion-text>
+    </ion-item>
+
+    <ion-item color="primary">
+      <ion-label>TOTAL</ion-label>
+      <ion-text> {{totalEntregas | currency:"BRL"}}</ion-text>
+    </ion-item>
+  </ion-list>
+  <ion-button class="btnPagamento"color="medium" expand="full" fill="none" size="large" disabled="true"><h2>Total Dia: {{totalDia | currency:"BRL"}}</h2></ion-button>
+
+</ion-content>
+
+<ion-footer>
+  <ion-button expand="full" size="large" (click)="fechar()" color="danger">fechar</ion-button>
+</ion-footer>

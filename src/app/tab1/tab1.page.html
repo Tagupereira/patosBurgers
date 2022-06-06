@@ -6,8 +6,7 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" color="light">
-
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" >
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
@@ -19,22 +18,24 @@
       </ion-item>
 
       <ion-list slot="content">
-         <ion-item lines="full"  *ngFor="let c of combo" (click)="adicionaItem(c.idProduto, c.nome)">
-
-          <ion-item >
+        <ion-item-sliding *ngFor="let c of combo">
+          <ion-item-options>
+            <ion-item-option color="danger">Excluir</ion-item-option>
+          </ion-item-options>
+          <ion-item lines="full" (click)="adicionaItem(c.idProduto, c.nome)">
             <ion-thumbnail slot="start">
-              <img class="imagemProduto" [src]="c.imagem"/>
+              <img class="imagemProduto" [src]="c.imagem" />
             </ion-thumbnail>
 
             <ion-label>
               <div>
                 <h1>{{c.nome}}</h1>
                 <p>{{c.descricao}}</p>
-                <p>R$ {{c.valor}}</p>
+                <p>{{c.valor | currency:'BRL'}}</p>
               </div>
             </ion-label>
           </ion-item>
-        </ion-item>
+        </ion-item-sliding>
       </ion-list>
     </ion-accordion>
 
@@ -44,21 +45,25 @@
         <ion-label>Individuais</ion-label>
       </ion-item>
       <ion-list slot="content">
-        <ion-item lines="full"  *ngFor="let i of individuais" (click)="adicionaItem(i.idProduto, i.nome)">
-          <ion-item>
+        <ion-item-sliding *ngFor="let i of individuais">
+          <ion-item-options>
+            <ion-item-option color="danger">Excluir</ion-item-option>
+          </ion-item-options>
+
+          <ion-item lines="full" (click)="adicionaItem(i.idProduto, i.nome)">
             <ion-thumbnail slot="start">
-              <img class="imagemProduto" [src]="i.imagem"/>
+              <img class="imagemProduto" [src]="i.imagem" />
             </ion-thumbnail>
 
             <ion-label>
               <div>
                 <h1>{{i.nome}}</h1>
                 <p>{{i.descricao}}</p>
-                <p>R$ {{i.valor}}</p>
+                <p>{{i.valor | currency:'BRL'}}</p>
               </div>
             </ion-label>
           </ion-item>
-        </ion-item>
+        </ion-item-sliding>
       </ion-list>
     </ion-accordion>
 
@@ -68,21 +73,25 @@
         <ion-label>Batatas</ion-label>
       </ion-item>
       <ion-list slot="content">
-        <ion-item lines="full"  *ngFor="let b of batatas" (click)="adicionaItem(b.idProduto, b.nome)">
-          <ion-item>
+        <ion-item-sliding *ngFor="let b of batatas">
+          <ion-item-options>
+            <ion-item-option color="danger">Excluir</ion-item-option>
+          </ion-item-options>
+
+          <ion-item lines="full" (click)="adicionaItem(b.idProduto, b.nome)">
             <ion-thumbnail slot="start">
-              <img class="imagemProduto" [src]="b.imagem"/>
+              <img class="imagemProduto" [src]="b.imagem" />
             </ion-thumbnail>
 
             <ion-label>
               <div>
                 <h1>{{b.nome}}</h1>
                 <p>{{b.descricao}}</p>
-                <p>R$ {{b.valor}}</p>
+                <p>{{b.valor | currency:'BRL'}}</p>
               </div>
             </ion-label>
           </ion-item>
-        </ion-item>
+        </ion-item-sliding>
       </ion-list>
     </ion-accordion>
 
@@ -92,22 +101,25 @@
         <ion-label>Refrigerantes</ion-label>
       </ion-item>
       <ion-list slot="content">
-        <ion-item lines="full" *ngFor="let r of refrigerantes" (click)="adicionaItem(r.idProduto, r.nome)">
-          <ion-item>
+        <ion-item-sliding *ngFor="let r of refrigerantes">
+          <ion-item-options>
+            <ion-item-option color="danger">Excluir</ion-item-option>
+          </ion-item-options>
 
+          <ion-item lines="full" (click)="adicionaItem(r.idProduto, r.nome)">
             <ion-thumbnail slot="start">
-              <img class="imagemProduto" [src]="r.imagem"/>
+              <img class="imagemProduto" [src]="r.imagem" />
             </ion-thumbnail>
 
             <ion-label>
               <div>
                 <h1>{{r.nome}}</h1>
                 <p>{{r.descricao}}</p>
-                <p>R$ {{r.valor}}</p>
+                <p>{{r.valor | currency:'BRL'}}</p>
               </div>
             </ion-label>
           </ion-item>
-        </ion-item>
+        </ion-item-sliding>
       </ion-list>
     </ion-accordion>
 
@@ -117,21 +129,53 @@
         <ion-label>Adicionais</ion-label>
       </ion-item>
       <ion-list slot="content">
-        <ion-item lines="full"  *ngFor="let a of adicionais" (click)="adicionaItem(a.idProduto, a.nome)">
-          <ion-item>
+        <ion-item-sliding *ngFor="let a of adicionais">
+          <ion-item-options>
+            <ion-item-option color="danger">Excluir</ion-item-option>
+          </ion-item-options>
+
+          <ion-item lines="full" (click)="adicionaItem(a.idProduto, a.nome)">
             <ion-thumbnail slot="start">
-              <img class="imagemProduto" [src]="a.imagem"/>
+              <img class="imagemProduto" [src]="a.imagem" />
             </ion-thumbnail>
 
             <ion-label>
               <div>
                 <h1>{{a.nome}}</h1>
                 <p>{{a.descricao}}</p>
-                <p>R$ {{a.valor}}</p>
+                <p>{{a.valor | currency:'BRL'}}</p>
               </div>
             </ion-label>
           </ion-item>
-        </ion-item>
+        </ion-item-sliding>
+      </ion-list>
+    </ion-accordion>
+
+    <ion-accordion value="Doces">
+      <ion-item slot="header">
+        <ion-icon class="size" name="sparkles-outline"></ion-icon>
+        <ion-label> Doces</ion-label>
+      </ion-item>
+      <ion-list slot="content">
+        <ion-item-sliding *ngFor="let d of doces">
+          <ion-item-options>
+            <ion-item-option color="danger">Excluir</ion-item-option>
+          </ion-item-options>
+
+          <ion-item lines="full" (click)="adicionaItem(d.idProduto,d.nome)">
+            <ion-thumbnail slot="start">
+              <img class="imagemProduto" [src]="d.imagem" />
+            </ion-thumbnail>
+
+            <ion-label>
+              <div>
+                <h1>{{d.nome}}</h1>
+                <p>{{d.descricao}}</p>
+                <p>{{d.valor | currency:'BRL'}}</p>
+              </div>
+            </ion-label>
+          </ion-item>
+        </ion-item-sliding>
       </ion-list>
     </ion-accordion>
 
@@ -141,50 +185,27 @@
         <ion-label>Descontos</ion-label>
       </ion-item>
       <ion-list slot="content">
-        <ion-item lines="full"  *ngFor="let e of descontos" (click)="adicionaItem(e.idProduto, e.nome)">
-          <ion-item>
-            <ion-thumbnail slot="start">
-              <img class="imagemProduto" [src]="e.imagem"/>
-            </ion-thumbnail>
+        <ion-item
+          lines="full"
+          *ngFor="let e of descontos"
+          (click)="adicionaItem(e.idProduto, e.nome)"
+        >
+          <ion-thumbnail slot="start">
+            <img class="imagemProduto" [src]="e.imagem" />
+          </ion-thumbnail>
 
-            <ion-label>
-              <div>
-                <h1>{{e.nome}}</h1>
-                <p>{{e.descricao}}</p>
-                <p>R$ {{e.valor}}</p>
-              </div>
-            </ion-label>
-          </ion-item>
+          <ion-label>
+            <div>
+              <h1>{{e.nome}}</h1>
+              <p>{{e.descricao}}</p>
+              <p>{{e.valor | currency:'BRL'}}</p>
+            </div>
+          </ion-label>
         </ion-item>
       </ion-list>
     </ion-accordion>
-
-    <!-- <ion-accordion value="Entregas">
-
-      <ion-item slot="header">
-        <ion-icon class="size" name="bicycle-outline"></ion-icon>
-        <ion-label> Entregas</ion-label>
-      </ion-item>
-      <ion-list slot="content">
-        <ion-item lines="full"  *ngFor="let e of entregas" (click)="adicionaItem(e.idProduto, e.nome)">
-          <ion-item>
-            <ion-thumbnail slot="start">
-              <img class="imagemProduto" [src]="e.imagem"/>
-            </ion-thumbnail>
-
-            <ion-label>
-              <div>
-                <h1>{{e.nome}}</h1>
-                <p>{{e.descricao}}</p>
-                <p>R$ {{e.valor}}</p>
-              </div>
-            </ion-label>
-          </ion-item>
-        </ion-item>
-      </ion-list>
-    </ion-accordion> -->
-
-
   </ion-accordion-group>
 </ion-content>
 
+<ion-footer>
+</ion-footer>

@@ -12,6 +12,7 @@ export class TabsPage implements OnInit{
   burger='./assets/icon_tabs/fast-food.svg';
   pedido='./assets/icon_tabs/list.svg';
   carrinho='./assets/icon_tabs/cart.svg';
+  entrega='./assets/icon_tabs/bicycle.svg';
 
   constructor() {
   }
