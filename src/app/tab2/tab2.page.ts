@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/quotes */
 /* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable prefer-arrow/prefer-arrow-functions */
@@ -55,6 +56,7 @@ export class Tab2Page implements OnInit{
   }
   async abrirModal(codPedido, valor, local, preco, cliente,tipo, dataPedido){
     //this.modal.dismiss();
+
     if(valor > 0 ){
       const modal = await this.modal.create({
         component: ModalPage,
@@ -66,14 +68,14 @@ export class Tab2Page implements OnInit{
           nomeCliente: cliente,
           tipoPag: tipo,
           data: dataPedido
-        },
-
+        }
       });
       modal.present();
     }
   }
 
   public atualizaPedidos(){
+    console.log("atualizou");
     this.pedidoData = this.pedido.reduce(function(acumulador, datArray){
       if(!acumulador[datArray.dataPedido]){
         acumulador[datArray.dataPedido] = [datArray.dataPedido];
@@ -156,4 +158,7 @@ export class Tab2Page implements OnInit{
 
 
   ngOnInit() {}
+  voltar(){
+    this.route.navigateByUrl('/');
+  }
 }

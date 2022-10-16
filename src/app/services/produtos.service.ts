@@ -23,11 +23,12 @@ export interface Categoria{
   providedIn: 'root'
 })
 export class ProdutosService {
-  private url = 'http://192.168.0.106/PROJETOS/API/produtos';
+  //pasta ='TESTE';
+  pasta ='PROJETOS';
 
-  private url1 = 'http://192.168.0.106/PROJETOS/API/carrinhoA';
-
-  private urlCat = 'http://192.168.0.106/PROJETOS/API/categoria';
+  private url = 'http://192.168.0.106/'+this.pasta+'/API/produtos';
+  private url1 = 'http://192.168.0.106/'+this.pasta+'/API/carrinhoA';
+  private urlCat = 'http://192.168.0.106/'+this.pasta+'/API/categoria';
 
   constructor(private http: HttpClient) {}
 
@@ -46,5 +47,10 @@ export class ProdutosService {
   getAllCat(){
     //return this.http.get<[Produto]>(this.url);
     return this.http.get<[Categoria]>(this.urlCat);
+  }
+
+  remove(id: number){
+    return this.http.delete(this.url + '/' + id);
+    //console.log(id);
   }
 }

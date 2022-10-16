@@ -6,12 +6,12 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" color="light">
-  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)" pullFactor="0.1">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
 
   <ion-accordion-group>
-    <ion-accordion value="combos">
+    <!----><ion-accordion value="combos">
       <ion-item slot="header">
         <ion-icon class="size" name="fast-food-outline"></ion-icon>
         <ion-label>Combos</ion-label>
@@ -20,7 +20,7 @@
       <ion-list slot="content">
         <ion-item-sliding *ngFor="let c of combo">
           <ion-item-options>
-            <ion-item-option color="danger">Excluir</ion-item-option>
+            <ion-item-option color="danger" (click)="remover(c.idProduto, c.nome)">Excluir</ion-item-option>
           </ion-item-options>
           <ion-item lines="full" (click)="adicionaItem(c.idProduto, c.nome)">
             <ion-thumbnail slot="start">
@@ -39,7 +39,7 @@
       </ion-list>
     </ion-accordion>
 
-    <ion-accordion value="Individuais">
+    <!----><ion-accordion value="Individuais">
       <ion-item slot="header">
         <ion-icon class="size" name="information-outline"></ion-icon>
         <ion-label>Individuais</ion-label>
@@ -47,7 +47,7 @@
       <ion-list slot="content">
         <ion-item-sliding *ngFor="let i of individuais">
           <ion-item-options>
-            <ion-item-option color="danger">Excluir</ion-item-option>
+            <ion-item-option color="danger" (click)="remover(i.idProduto, i.nome)">Excluir</ion-item-option>
           </ion-item-options>
 
           <ion-item lines="full" (click)="adicionaItem(i.idProduto, i.nome)">
@@ -67,7 +67,7 @@
       </ion-list>
     </ion-accordion>
 
-    <ion-accordion value="Batatas">
+    <!----><ion-accordion value="Batatas">
       <ion-item slot="header">
         <ion-icon class="size" name="stats-chart-outline"></ion-icon>
         <ion-label>Batatas</ion-label>
@@ -75,7 +75,7 @@
       <ion-list slot="content">
         <ion-item-sliding *ngFor="let b of batatas">
           <ion-item-options>
-            <ion-item-option color="danger">Excluir</ion-item-option>
+            <ion-item-option color="danger" (click)="remover(b.idProduto, b.nome)">Excluir</ion-item-option>
           </ion-item-options>
 
           <ion-item lines="full" (click)="adicionaItem(b.idProduto, b.nome)">
@@ -95,7 +95,7 @@
       </ion-list>
     </ion-accordion>
 
-    <ion-accordion value="Refrigerantes">
+    <!----><ion-accordion value="Refrigerantes">
       <ion-item slot="header">
         <ion-icon class="size" name="pint-outline"></ion-icon>
         <ion-label>Refrigerantes</ion-label>
@@ -103,7 +103,7 @@
       <ion-list slot="content">
         <ion-item-sliding *ngFor="let r of refrigerantes">
           <ion-item-options>
-            <ion-item-option color="danger">Excluir</ion-item-option>
+            <ion-item-option color="danger" (click)="remover(r.idProduto, r.nome)">Excluir</ion-item-option>
           </ion-item-options>
 
           <ion-item lines="full" (click)="adicionaItem(r.idProduto, r.nome)">
@@ -123,7 +123,7 @@
       </ion-list>
     </ion-accordion>
 
-    <ion-accordion value="Adicionais">
+    <!----><ion-accordion value="Adicionais">
       <ion-item slot="header">
         <ion-icon class="size" name="add-outline"></ion-icon>
         <ion-label>Adicionais</ion-label>
@@ -131,7 +131,7 @@
       <ion-list slot="content">
         <ion-item-sliding *ngFor="let a of adicionais">
           <ion-item-options>
-            <ion-item-option color="danger">Excluir</ion-item-option>
+            <ion-item-option color="danger" (click)="remover(a.idProduto, a.nome)">Excluir</ion-item-option>
           </ion-item-options>
 
           <ion-item lines="full" (click)="adicionaItem(a.idProduto, a.nome)">
@@ -151,15 +151,16 @@
       </ion-list>
     </ion-accordion>
 
-    <ion-accordion value="Doces">
+    <!----><ion-accordion value="Doces">
       <ion-item slot="header">
         <ion-icon class="size" name="sparkles-outline"></ion-icon>
         <ion-label> Doces</ion-label>
       </ion-item>
       <ion-list slot="content">
+
         <ion-item-sliding *ngFor="let d of doces">
           <ion-item-options>
-            <ion-item-option color="danger">Excluir</ion-item-option>
+            <ion-item-option color="danger" (click)="remover(d.idProduto, d.nome)">Excluir</ion-item-option>
           </ion-item-options>
 
           <ion-item lines="full" (click)="adicionaItem(d.idProduto,d.nome)">
@@ -179,7 +180,7 @@
       </ion-list>
     </ion-accordion>
 
-    <ion-accordion value="Descontos">
+    <!----><ion-accordion value="Descontos">
       <ion-item slot="header">
         <ion-icon class="size" name="wallet-outline"></ion-icon>
         <ion-label>Descontos</ion-label>
@@ -208,4 +209,9 @@
 </ion-content>
 
 <ion-footer>
+  <ion-button color="success" expand="block" size="large" (click)="carrinho()">
+
+    {{infoButton}}
+
+  </ion-button>
 </ion-footer>

@@ -20,8 +20,11 @@ export interface Pedido{
 })
 export class PedidosService {
 
-  private url = 'http://192.168.0.106/PROJETOS/API/carrinho';
-  private url1 = 'http://192.168.0.106/PROJETOS/API/carrinhoD';
+  //pasta ='TESTE';
+  pasta ='PROJETOS';
+
+  private url = 'http://192.168.0.106/'+this.pasta+'/API/carrinho';
+  private url1 = 'http://192.168.0.106/'+this.pasta+'/API/carrinhoD';
 
   constructor( private http: HttpClient) {}
 

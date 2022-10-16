@@ -14,7 +14,10 @@ export interface Entrega{
 })
 export class PagamentoService {
 
-  private url = 'http://192.168.0.106/PROJETOS/API/pagamento';
+  //pasta ='TESTE';
+  pasta ='PROJETOS';
+
+  private url = 'http://192.168.0.106/'+this.pasta+'/API/pagamento';
 
   constructor( private http: HttpClient) {}
 

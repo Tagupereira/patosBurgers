@@ -15,7 +15,7 @@
   </ion-item>
   <ion-item lines="full">
     <ion-item lines="none"><h4><strong>Cliente: </strong>{{nomeCliente}}</h4></ion-item>
-    <ion-item lines="none"  slot="end" >{{tipoPag}}</ion-item>
+    <ion-item lines="none" slot="end" color="{{color}}"(click)="mudarPagamento(cod)">{{tipoPag}}</ion-item>
   </ion-item>
 
   <ion-list>

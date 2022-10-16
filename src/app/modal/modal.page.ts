@@ -1,9 +1,12 @@
+/* eslint-disable @typescript-eslint/no-shadow */
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/quotes */
 
 import { PedidoService } from './../services/pedido.service';
 import { ModalController, AlertController, ToastController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-modal',
@@ -24,6 +27,8 @@ export class ModalPage implements OnInit {
   colorToast: string;
   data: any;
   dateForm;
+  color;
+  pagamento;
 
   constructor(
     private modal: ModalController,
@@ -35,6 +40,7 @@ export class ModalPage implements OnInit {
 
   fecharModal(){
     this.modal.dismiss();
+
   }
 
   ngOnInit() {
@@ -43,6 +49,11 @@ export class ModalPage implements OnInit {
     });
     this.data = this.data.split('-').reverse().join('-');
     this.total = Number(this.total) + Number(this.valEnt);
+
+    if(this.tipoPag === "Pendente"){
+      this.color = "danger";
+    }
+
   }
 
   async excluirPedido(cod) {
@@ -107,10 +118,113 @@ export class ModalPage implements OnInit {
     }
   }
 
+  async mudarPagamento(cod){
+
+    const alert = await this.alert.create({
+      header: 'Pedido #'+ cod,
+      message: 'Alterar pagamento '+ this.tipoPag+'?',
+      buttons: [
+        {
+          text: 'Não',
+          role: 'cancel',
+          cssClass: 'secondary',
+          id: 'cancel-button'
+        }, {
+          text: 'Sim',
+          id: 'confirm-button',
+          handler: () => {
+            this.alterarPagamento(cod);
+            this.alert.dismiss;
+
+          },
+
+        }
+      ]
+    });
+    await alert.present();
+
+  }
+
+  async alterarPagamento(cod){
+
+    const alert = await this.alert.create({
+      header: 'Pedido #'+ cod,
+      message: 'Selecione um pagamento!',
+      inputs: [
+        {
+          label: 'Dinheiro',
+          type: 'radio',
+          value: '1',
+          handler: () => {
+            this.pagamento = 1;
+            console.log(this.pagamento);
+          }
+        },
+        {
+          label: 'PIX',
+          type: 'radio',
+          value: '2',
+          handler: () => {
+            this.pagamento = 2;
+            console.log(this.pagamento);
+          }
+        },
+        {
+          label: 'Cartão',
+          type: 'radio',
+          value: '5',
+          handler: () => {
+            this.pagamento = 5;
+            console.log(this.pagamento);
+          }
+
+        },
+        {
+          label: 'Pendente',
+          type: 'radio',
+          value: '6',
+          handler: () => {
+            this.pagamento = 6;
+            console.log(this.pagamento);
+          }
+        }
+      ],
+
+      buttons: [
+        {
+          text: 'cancelar',
+          role: 'cancel',
+          cssClass: 'secondary',
+          id: 'cancel-button'
+        }, {
+          text: 'Confirmar',
+          id: 'confirm-button',
+          handler: () => {
+            this.msg='Pagamento recebido!';
+            this.colorToast = 'success';
+            this.canceladoToast();
+            this.fecharModal();
+            this.recebePagamento(cod);
+
+          }
+        }
+      ]
+
+    });
+    await alert.present();
+
+  }
+  recebePagamento(cod){
+    this.pedido.alterarPagamento(cod, this.pagamento).subscribe(response =>{
+      console.log(response);
+      this.fecharModal();
+
+    });
+  }
+
   excluir(cod){
     this.pedido.excluirCarrinho(cod).subscribe(() =>{
       this.fecharModal();
-
     });
   }
 

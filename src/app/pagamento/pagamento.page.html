@@ -21,10 +21,10 @@
 
     <ion-row>
       <ion-col>
-        <ion-button class="btnPay" shape="round" size="default" (click)="recebePagamento('Débito', '3')">Débito</ion-button>
+        <ion-button class="btnPay" shape="round" size="default" (click)="recebePagamento('Cartão', '5')">Cartão</ion-button>
       </ion-col>
       <ion-col>
-        <ion-button class="btnPay" shape="round" size="default" (click)="recebePagamento('Crédito', '4')">Crédito</ion-button>
+        <ion-button class="btnPay" shape="round" size="default" (click)="recebePagamento('Pendente', '6')" color="danger">Pendente</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
@@ -34,7 +34,7 @@
 
   <ion-item class="input">
     <ion-label color="none"><ion-icon name="add" ></ion-icon> Adicionar cliente : </ion-label>
-    <ion-input autofocus="true" (ionChange)="nome($event)" type="text" name="cliente" 	maxlength="19" clearInput value="{{nomeCliente}}"></ion-input>
+    <ion-input focus="true" (ionChange)="nome($event)" type="text" name="cliente" 	maxlength="19" clearInput value="{{nomeCliente}}"></ion-input>
   </ion-item>
 
   <ion-item lines="full" class="entrega">

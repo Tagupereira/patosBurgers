@@ -27,8 +27,11 @@ export interface Pedido{
 })
 export class PedidoService {
 
-  private url = 'http://192.168.0.106/PROJETOS/API/pedidos';
-  private url1 = 'http://192.168.0.106/PROJETOS/API/carrinhoD';
+  //pasta ='TESTE';
+  pasta ='PROJETOS';
+
+  private url = 'http://192.168.0.106/'+this.pasta+'/API/pedidos';
+  private url1 = 'http://192.168.0.106/'+this.pasta+'/API/carrinhoD';
 
 
   constructor(private http: HttpClient) { }
@@ -43,6 +46,11 @@ export class PedidoService {
 
   excluirCarrinho(delPedido){
     return this.http.delete(this.url1 + '/' + delPedido);
+  }
+
+  alterarPagamento(idPedido: any, pagamento: any){
+    //console.log(cod, pagamento, 'recebido');
+    return this.http.put(this.url + '/' + idPedido, pagamento);
   }
 
 }

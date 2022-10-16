@@ -195,6 +195,10 @@ export class Tab3Page implements OnInit{
     }
   }
 
+  voltar(){
+    this.route.navigateByUrl('/');
+  }
+
     ngOnInit(){
 
       this.service.getAll().subscribe(response =>{

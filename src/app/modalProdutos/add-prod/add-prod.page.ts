@@ -21,18 +21,21 @@ import { ToastController } from '@ionic/angular';
 
 export class AddProdPage implements OnInit, OnDestroy {
 
+  caminho = 'http://192.168.0.106/PROJETOS/assets/produtos/';
   files: Set<File>;
   titulo = 'Novo Produto';
-  imagem = 'assets/img/produtos/qualquer.jpg';
-  foto = 'assets/img/produtos/maisTeste.jpg';
+  imagem = this.caminho + 'qualquer.jpg';
+  foto = this.caminho + 'maisTeste.jpg';
   label = 'Adicionar imagem';
-  caminho = 'assets/img/produtos/';
 
   product: string ;
   price;
   valorView;
   cat;
   precoProduto;
+  arquivo;
+
+  imgProduto;//testa o arquivo de imagem enviado via post
 
   categoria: Categoria[];
   listaCategorias = [];
@@ -64,6 +67,7 @@ export class AddProdPage implements OnInit, OnDestroy {
 
   valor(event){
     this.price = event.target.value;
+    this.precoProduto = event.target.value;
   }
 
   category(event){
@@ -72,17 +76,15 @@ export class AddProdPage implements OnInit, OnDestroy {
 
   onChange(event){
 
-    const files = <FileList>event.srcElement.files;
-    const view = files[0];
-    const imgGet = files[0].name;
+    const files = event.target.files[0];
+    const imgGet = files.name;
 
     this.files = new Set();
     this.imagem = imgGet;
     this.foto = URL.createObjectURL(event.target.files[0]);
+    this.arquivo = files;
 
     this.label = 'Imagem: '+ imgGet;
-    console.log(files);
-
   }
 
   adicionarProduto(){
@@ -92,12 +94,13 @@ export class AddProdPage implements OnInit, OnDestroy {
       this.adiciona["nome"] = this.product;
       this.adiciona["preco"] = this.precoProduto;
       this.adiciona["categoria"] = this.cat;
-      this.adiciona["imagem"] = this.imagem;
+      this.adiciona["imagem"] = this.arquivo;
 
       const adiciona = this.adiciona;
+      console.log('adiciona',adiciona);
 
       this.service.cadastrarProduto(adiciona).subscribe(response=>{
-
+        console.log(response);
         this.adicionadoToast();
         this.rota.navigateByUrl('/');
       });
@@ -118,34 +121,34 @@ export class AddProdPage implements OnInit, OnDestroy {
     });
   }
 
-  formatarMoeda() {
+  // formatarMoeda() {
 
-    let valor = this.price;
-    valor = valor + '';
-    valor = parseInt(valor.replace(/[\D]+/g,''));
-    valor = valor + '';
-    valor = valor.replace(/([0-9]{2})$/g, ".$1");
+  //   let valor = this.price;
+  //   valor = valor + '';
+  //   valor = parseInt(valor.replace(/[\D]+/g,''));
+  //   valor = valor + '';
+  //   valor = valor.replace(/([0-9]{2})$/g, ".$1");
 
-    if (valor.length > 6) {
-      valor = valor.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1.$2");
-      //se quiser alterar a , por . so alterar no trecho acima $1.$2;
-    }
-    else if (isNaN(valor)){
-      valor = '0.00';
-    }
+  //   if (valor.length > 6) {
+  //     valor = valor.replace(/([0-9]{3}),([0-9]{2}$)/g, ".$1.$2");
+  //     //se quiser alterar a , por . so alterar no trecho acima $1.$2;
+  //   }
+  //   else if (isNaN(valor)){
+  //     valor = '0.00';
+  //   }
 
-    this.price = valor;
-    this.valorView = 'R$ '+ valor;
-    this.precoProduto = valor;
+  //   this.price = valor;
+  //   this.valorView =  valor;
+  //   this.precoProduto = valor;
 
-  }
+  // }
 
   resetar(){
     this.listaCategorias = [];
     this.price = '';
     this.valorView = '';
     this.cat = '';
-    this.imagem = 'assets/img/produtos/qualquer.jpg';
+    this.imagem = this.caminho + 'qualquer.jpg';
 
   }
 

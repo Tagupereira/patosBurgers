@@ -21,7 +21,8 @@
   </ion-item>
   <ion-item>
     <ion-label position="floating">Preço de Venda</ion-label>
-    <ion-input type="tel" id="valor" maxlength="9" (ionChange)="valor($event)" (keyup)="formatarMoeda()" value="{{valorView}}" required="true"></ion-input>
+    <!--ion-input type="tel" id="valor" maxlength="9" (ionChange)="valor($event)" (keyup)="formatarMoeda()" value="{{valorView}}" required="true"></!--ion-input-->
+    <ion-input type="number" id="valor" maxlength="6" (ionChange)="valor($event)" required="true" reset></ion-input>
   </ion-item>
 
   <ion-item>
